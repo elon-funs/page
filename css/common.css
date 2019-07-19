@@ -5,7 +5,7 @@ a:hover{text-decoration:underline;}
  * -- BASE STYLES --
  * Most of these are inherited from Base, but I want to change a few.
  */
-body {line-height: 1.7em;color: #7f8c8d;font-size: 13px;padding-top: 3em;}
+body {line-height: 1.7em;color: #7f8c8d;font-size: 13px;padding-top: 3em;background-color: #f3f3f3;}
 
 h1,h2,h3,h4,h5,h6,label {color: #333;}
 
@@ -144,7 +144,7 @@ margin:0em .6em;
 .ribbon {background: #f3f3f3;color: #111;}
 
 /* This is the class used for the footer */
-.footer {background: #111;width: 100%;}
+.footer {background: #111;width: 100%;position: fixed;bottom: 0;}
 
 
 /* moile menu*/

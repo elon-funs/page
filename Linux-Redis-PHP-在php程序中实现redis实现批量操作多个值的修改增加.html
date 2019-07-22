@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
-    <title>datamoney-Ubuntu-system-系统设置打不开</title>
-    <meta name="csrf-token" content="pmegsubUZ5M6JWCXYrIV45tA8ccHmZya222s8hIP">
-    <link rel="stylesheet" href="http://datamoney.net/css/pure.css" integrity="sha384-" crossorigin="anonymous">
+    <title>datamoney-Linux-Redis-PHP-在php程序中实现redis实现批量操作多个值的修改增加</title>
+    <meta name="csrf-token" content="y9cPJvGGcUVCVvK5D2QcJindZpexLxolL6c8D3mA">
+    <link rel="stylesheet" href="http://datamoney.net/css/pure.css">
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="http://datamoney.net/css/grids-responsive-old-ie-min.css">
     <![endif]-->
@@ -44,7 +44,7 @@
 </div>
     <div class="splash-container">
     <div class="splash">
-        <h1 class="splash-head">Ubuntu-system-系统设置打不开</h1>
+        <h1 class="splash-head">Linux-Redis-PHP-在php程序中实现redis实现批量操作多个值的修改增加</h1>
         <p class="splash-subhead">
         	andy发表:
         </p>
@@ -55,16 +55,9 @@
 	        <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
 	            <pre class="coderead">
 					#&gt;0思路
-		如果你曾删除过配置文件,尤其是输入法.则往下阅读,否则无用.
-		是由于卸载ibus导致的,unity-control-center依赖ibus,卸载ibus unity-control-center也会被卸载所以 不能乱动。
-		#&gt;1重新安装gnome-control-center
-		sudo apt-get install gnome-control-center           
-
-		#2.重新安装unity-control-center 
-		sudo apt-get install unity-control-center //如果设置里只有很少的几个图标请重新安装unity-control-center
-
-		#3.重新安装gnome
-		sudo apt-get install ubuntu-desktop	//这个会把Ubuntu预装的软件,装完自己再慢慢卸载吧或者他也提供了一次性的安装办法
+		背景redis原生支持批量操作[除特别旧的版本],一条命令加多个值到set/list的,但php-redis 扩展或框架是循环单条实现的批量操作。
+		$redis-&gt;lPush($key, string $v1,string $v2,string $v3);redis本身实现批量但是对于参数格式为 
+		$redis-&gt;lPush($key, ...$r);那结合php7的可变参数即可实现,[最终生成的redis操作命令未进行核实]
 	            </pre>
 	       </div>
 	</div>
@@ -75,12 +68,5 @@
 </div></body>
     <script src="http://datamoney.net/js/jquery-224.min.js"></script>
     <script src="http://datamoney.net/js/co.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-117495425-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-117495425-1');
-</script>
+
 </html>

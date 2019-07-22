@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
-    <title>datamoney-Ubuntu-snap-apt-package-安装nextcloud一分钟搭建自己私有云</title>
-    <meta name="csrf-token" content="UZrlgSxfpd9tx2ARw6ZOkWZe0tmdhnQ93DOtDqPW">
-    <link rel="stylesheet" href="http://datamoney.net/css/pure.css" integrity="sha384-" crossorigin="anonymous">
+    <title>datamoney-Linux-Mysql-远程访问配置</title>
+    <meta name="csrf-token" content="c7jdZyylaLKw0yjH8SqsghFyRzYljeoGpW1Scarn">
+    <link rel="stylesheet" href="http://datamoney.net/css/pure.css">
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="http://datamoney.net/css/grids-responsive-old-ie-min.css">
     <![endif]-->
@@ -44,7 +44,7 @@
 </div>
     <div class="splash-container">
     <div class="splash">
-        <h1 class="splash-head">Ubuntu-snap-apt-package-安装nextcloud一分钟搭建自己私有云</h1>
+        <h1 class="splash-head">Linux-Mysql-远程访问配置</h1>
         <p class="splash-subhead">
         	andy发表:
         </p>
@@ -54,17 +54,20 @@
 	<div class="ribbon l-box-lrg pure-g">
 	        <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
 	            <pre class="coderead">
-					#&gt;1 一条命令搞定
-	snap install nextcloud.
-	坐等完成!
-	#&gt;2目录说明
-	nextcloud snap包含以下组件:
-    Nextcloud 12.0.5
-    Apache 2.4
-    PHP 7.1
-    MySQL 5.7
-    Redis 3.2
-    mDNS用于网络发现
+						#&gt;1.得先有用户名和密码吧, 没有就创建,用户名是 remote ,密码是123456
+		#&gt;2.可忽略,查看当前用户状态: select host,user,password from user where user = &quot;remote&quot;;
+		#&gt;3.让 remote 为能从你的IP登陆,%表示哪个ip都能登陆 : update user set host = &quot;%&quot; where user = &quot;remote&quot;;
+		#&gt;4.让 remote 对数据库有操作权限,不然登陆什么也干不了 : grant all privileges on *.* to remote@&quot;%&quot; identified by &quot;123456&quot;;
+		#&gt;5.更新 : flush privileges; 相当于刷新保存你的设置 。》 
+		#&gt;6.可选,上面没升效,那就重启mysql:  sudo service mysql restart。 
+		#&gt;7.如果不行,再从1到6检查对不对。还不行？
+		
+		#&gt;8最终级处理,直接去修改mysql 配置文件,让他可以远程登陆:
+		参考路径: /etc/mysql/mysql.conf.d/mysqld.cnf 
+		就是这行: bind-address            = 127.0.0.1
+		修改成: bind-address            = 0.0.0.0
+		再来 》 更新 : flush privileges;》 重启mysql:  sudo service mysql restart。
+		就可以用你现在的账户密码去登陆了。
 	            </pre>
 	       </div>
 	</div>
@@ -75,12 +78,5 @@
 </div></body>
     <script src="http://datamoney.net/js/jquery-224.min.js"></script>
     <script src="http://datamoney.net/js/co.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-117495425-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-117495425-1');
-</script>
+
 </html>

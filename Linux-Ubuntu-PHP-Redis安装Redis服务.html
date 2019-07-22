@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
-    <title>datamoney-Ubuntu-deb-包deb软件安装</title>
-    <meta name="csrf-token" content="MXCBnpagLmr85sV3tsY5LXdxzOxn03gzvrBGu5DN">
-    <link rel="stylesheet" href="http://datamoney.net/css/pure.css" integrity="sha384-" crossorigin="anonymous">
+    <title>datamoney-Linux-Ubuntu-PHP-Redis安装Redis服务</title>
+    <meta name="csrf-token" content="R1nSmBLe0mzq1SIiVDcjyfJlrS1ii5kdx5Ja47tJ">
+    <link rel="stylesheet" href="http://datamoney.net/css/pure.css">
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="http://datamoney.net/css/grids-responsive-old-ie-min.css">
     <![endif]-->
@@ -44,7 +44,7 @@
 </div>
     <div class="splash-container">
     <div class="splash">
-        <h1 class="splash-head">Ubuntu-deb-包deb软件安装</h1>
+        <h1 class="splash-head">Linux-Ubuntu-PHP-Redis安装Redis服务</h1>
         <p class="splash-subhead">
         	andy发表:
         </p>
@@ -54,7 +54,12 @@
 	<div class="ribbon l-box-lrg pure-g">
 	        <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
 	            <pre class="coderead">
-					ubuntu下面可以直接安装,sudo dkpg -i filename.deb,如果不支持则需安装 i386 的对应对功能包即可
+					#&gt;1
+		sudo apt-get install redis-server php-redis
+        #&gt;2
+        php.ini中添加扩展extension=redis.so
+		#&gt;3
+		如果不行再在前面加上 extension＝igbinary.so
 	            </pre>
 	       </div>
 	</div>
@@ -65,12 +70,5 @@
 </div></body>
     <script src="http://datamoney.net/js/jquery-224.min.js"></script>
     <script src="http://datamoney.net/js/co.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-117495425-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-117495425-1');
-</script>
+
 </html>

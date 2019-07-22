@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
-    <title>datamoney-Docker-compose-docker-增加固定IP增加域名映射.docker-compose配置</title>
-    <meta name="csrf-token" content="59W8kmxg78VxhtA28ETrsuDCohGaNPIG285NqDOv">
-    <link rel="stylesheet" href="http://datamoney.net/css/pure.css" integrity="sha384-" crossorigin="anonymous">
+    <title>datamoney-Ubuntu-apt&amp;deb-package-安装过的软件包管理</title>
+    <meta name="csrf-token" content="34EIgSNeoGhPZCQ8RlzQAaAN3UYjVbVtqGaxS5hf">
+    <link rel="stylesheet" href="http://datamoney.net/css/pure.css">
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="http://datamoney.net/css/grids-responsive-old-ie-min.css">
     <![endif]-->
@@ -44,7 +44,7 @@
 </div>
     <div class="splash-container">
     <div class="splash">
-        <h1 class="splash-head">Docker-compose-docker-增加固定IP增加域名映射.docker-compose配置</h1>
+        <h1 class="splash-head">Ubuntu-apt&amp;deb-package-安装过的软件包管理</h1>
         <p class="splash-subhead">
         	andy发表:
         </p>
@@ -54,52 +54,10 @@
 	<div class="ribbon l-box-lrg pure-g">
 	        <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
 	            <pre class="coderead">
-					#&gt;1要配固定IP-就先配一组网关,可以自定名字,可以配置多组
-networks:
-  frontend:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.18.0.0/24
-  backend:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.19.0.0/24
-#&gt;2具体服务内的容器配置
-services:
-	//容器code
-    code:
-      image: mysql:last
-      volumes:
-        - /var/code:/var/code:cached
-      //**********
-      在这里加域名,相当于给容器/etc/hosts.增加一個localhost域名。兩者不同在于重启后依然生效.
-      !!!特別是你访问a容器,而a的程序在運行时依赖访问容器中B网站.此时如无IP域名关系.容器运行时,会出现,127.0.0.1或网卡已被占,整个程序死掉.你在访问网站时, 程序一次性调用了, php.mysql,redis,nginx为啥没事.那是不同的服务和端口,相互不占用彼此通道.
-      *************/
-      extra_hosts:
-        - &quot;s.com:172.19.0.1&quot;
-      //在这里改端口映射关系,防止容器与其实容器或本地主机冲突
-      ports:
-        - &quot;2222:22&quot;
-        - &quot;6379:6379&quot;
-        - &quot;80:80&quot;
-    //就是方便你bash进入也有个名字, 而不是个字串.对应容器中的hostname
-      hostname:
-        myname 
-      tty: true
-      //这里还是很重要的.字符集,时间地区,另外你如果要登陆的账户密码可以直接配置.
-      environment:
-        - MYSQL_DATABASE=${MYSQL_DATABASE}
-        - MYSQL_USER=${MYSQL_USER}
-        - TZ=${TIMEZONE}
-      networks:
-      	//配置固定IP
-        frontend:
-          ipv4_address: 172.18.0.1
-        //另一组里的固定Ip
-        backend:
-          ipv4_address: 172.19.0.1
+					#&gt;1apt
+	sudo apt list --installed
+	#&gt;2dpkg&amp;deb
+	sudo dpkg-query -l
 	            </pre>
 	       </div>
 	</div>
@@ -110,12 +68,5 @@ services:
 </div></body>
     <script src="http://datamoney.net/js/jquery-224.min.js"></script>
     <script src="http://datamoney.net/js/co.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-117495425-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-117495425-1');
-</script>
+
 </html>

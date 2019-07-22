@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
-    <title>datamoney-Linux-Ubuntu-Centos-设置命令行补全不区分大小写</title>
-    <meta name="csrf-token" content="xrUoNPHydfk1jtC3RHUs7J1hoUle1SXpNt6vmpFf">
-    <link rel="stylesheet" href="http://datamoney.net/css/pure.css" integrity="sha384-" crossorigin="anonymous">
+    <title>datamoney-Linux-Reids-Mysql-redis&lt;=&gt;Mysql数据转移在命令行中进行比程序中效率高几十倍</title>
+    <meta name="csrf-token" content="HzpYLorZMcHgjezw3I0Gdiiail1Uh9uwfyhJ8EU0">
+    <link rel="stylesheet" href="http://datamoney.net/css/pure.css">
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="http://datamoney.net/css/grids-responsive-old-ie-min.css">
     <![endif]-->
@@ -44,7 +44,7 @@
 </div>
     <div class="splash-container">
     <div class="splash">
-        <h1 class="splash-head">Linux-Ubuntu-Centos-设置命令行补全不区分大小写</h1>
+        <h1 class="splash-head">Linux-Reids-Mysql-redis&lt;=&gt;Mysql数据转移在命令行中进行比程序中效率高几十倍</h1>
         <p class="splash-subhead">
         	andy发表:
         </p>
@@ -55,14 +55,10 @@
 	        <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
 	            <pre class="coderead">
 					#&gt;0思路
-		系统自带这个功能打开配置即可:
-		#&gt;1
-		nano ~/.inputrc,如果没这个文件就新建一个.
-		
-		#2粘贴上以下语句:
-		set completion-ignore-case on
-		set show-all-if-ambiguous on
-		TAB: menu-complete
+		redis格式例如: hset key value [expired] [ect]
+		在mysql中创建视图表,设置 hset,key,value,[expired],[ect] select contact(hset,&quot;空格&quot;,key,&quot;空格&quot;,value,&quot;空格&quot;[expired],&quot;空格&quot;[ect]) 以生成 redis 原生命令格式,把这段mysql操作,写成 sql脚本,在命令行直接执行即可.
+		mysql stats_db --skip-column-names --raw &lt; mysql_to_red	is.sql | redis-cli --pipe
+		参考:https://www.oschina.net/translate/mysql-to-redis-in-one-step
 	            </pre>
 	       </div>
 	</div>
@@ -73,12 +69,5 @@
 </div></body>
     <script src="http://datamoney.net/js/jquery-224.min.js"></script>
     <script src="http://datamoney.net/js/co.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-117495425-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-117495425-1');
-</script>
+
 </html>

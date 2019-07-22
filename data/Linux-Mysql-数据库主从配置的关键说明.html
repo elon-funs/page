@@ -1,0 +1,121 @@
+<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
+    <title>datamoney-Linux-Mysql-数据库主从配置的关键说明</title>
+    <meta name="csrf-token" content="KMj2Hy4jxqwUu2SLzfMKZQ63uieH8nYkKOg6IQLZ">
+    <link rel="stylesheet" href="http://datamoney.net/css/pure.css" integrity="sha384-" crossorigin="anonymous">
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://datamoney.net/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="http://datamoney.net/css/grids-responsive-min.css">
+    <!--<![endif]-->    
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://datamoney.net/css/common-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="http://datamoney.net/css/common.css">
+    <!--<![endif]-->
+</head>
+<body>
+        <div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+        <a class="bor-r50p menu-logo" href="">
+              <div class="menu-logo-c3 bor-r50p">
+               <div class="menu-logo-c5 bor-r50p"></div>
+               <div class="menu-logo-c4 bor-r50p"></div>
+               <div class="menu-logo-color1">
+                <div class="menu-logo-color2"></div>
+               </div>
+              </div>
+        </a>
+        <a class="pure-menu-heading" href="/index">DataMoney.net</a>
+        <a class="pure-menu-mobile icon iconfont" href="/index">&#xe64d;</a>
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item pure-menu-selected"><a href="/" class="pure-menu-link">Home</a></li>
+            <li class="pure-menu-item"><a href="/data" class="pure-menu-link">Data[Tech]</a></li>
+            <li class="pure-menu-item"><a href="/money" class="pure-menu-link">Money[Finance]</a></li>
+            <li class="pure-menu-item"><a href="/share" class="pure-menu-link">Resource[Share]</a></li>
+        </ul>
+    </div>
+</div>
+    <div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">Linux-Mysql-数据库主从配置的关键说明</h1>
+        <p class="splash-subhead">
+        	andy发表:
+        </p>
+    </div>
+</div><div class="content-wrapper">
+    	
+	<div class="ribbon l-box-lrg pure-g">
+	        <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
+	            <pre class="coderead">
+					#&gt;0思路
+		mysql 自带有bin-log 二进制日志（就是你在a机器上干过的,引起数据变动的事情,统统都搞成可以直接执行的程序,然后搞到别的机器上执行一遍,你说一样不一样？）
+		所以需要让a,b机器建立关联。
+			1.连接就是iP+端口,所以公网/内网/docker,能通就行,2.这段二进制程序,谁来生成,谁来执行。
+			甚至二进制程序如何生成,怎么运行,怎么传输等等不属于配置问题了, mysql已实现。不用操心,想研究的请进入另一个主题
+	
+		#&gt;1. 这台叫主服吧,给这台mysql起个名字server-id = 1 开启二进制日志,给日志起个文件名,存放路径也可以自己定,不写就默认
+
+		echo &quot;server-id=1
+		log_bin=mysql-bin
+		log_error=mysql-bin.err
+		lower_case_table_names=1&quot;
+		&gt;&gt; /etc/mysql/conf.d/my.cnf
+
+		#&gt;2.在主服务器创建一个专门的同步用户,一般都是只读嘛
+		GRANT REPLICATION SLAVE ON *.* TO &quot;slave&quot;@&quot;%&quot; IDENTIFIED BY &quot;123456&quot;;
+		
+		#&gt;3.建好了别乱动,一动就有日志了。是不是这个道理？走,搞从服务器
+
+		#&gt;4.在从服务器上加入对应的主服务器配置信息。
+		前面有提到要分配server-id,别忘记了, 就加个server-id就行,别的用不上。
+		CHANGE MASTER TO 
+			MASTER_HOST=&quot;172.19.6.2&quot;,
+		    MASTER_PORT=3306,
+		    MASTER_USER = &quot;slave&quot;,
+		    MASTER_PASSWORD = &quot;123456&quot;,
+		    MASTER_LOG_FILE = &quot;slave-mysql-bin.000001&quot;,
+		    MASTER_LOG_POS = 430;
+		
+		#&gt;5其他用到的命令
+		mysql文件配置文件地址 /etc/mysql/conf.d/my.cnf					
+		start slave;
+		stop slave;//修改配置信息时, 需要先停止同步服务。
+		show slave status 
+		show master status 
+		show grants for &quot;slave&quot;@&quot;%&quot;
+		// 不需要同步哪些 -就在主服上设置,不产生日志,另一台就自然没了来源。
+		binlog-ignore-db = mysql  
+		binlog-ignore-db = test  
+		binlog-ignore-db = information_schema  
+		  
+		// 同步哪些数据库,除此之外,其他不同步  
+		binlog-do-db = game
+
+		#&gt;6特别提示
+		两台数据库同时配置完成,再操作建库建表等数据操作.原因:就是不要在没同步前产生日志.
+	            </pre>
+	       </div>
+	</div>
+	
+</div>
+<div class="footer tac">
+    &#169; Since 2018 by <a href="#" class="tfcfff">DataMoney.net</a>
+</div></body>
+    <script src="http://datamoney.net/js/jquery-224.min.js"></script>
+    <script src="http://datamoney.net/js/co.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-117495425-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-117495425-1');
+</script>
+</html>

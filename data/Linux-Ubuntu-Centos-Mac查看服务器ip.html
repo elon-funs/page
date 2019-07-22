@@ -1,0 +1,94 @@
+<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
+    <title>datamoney-Linux-Ubuntu-Centos-Mac查看服务器ip</title>
+    <meta name="csrf-token" content="fj3slkSmtnSybGTKHMJwP34sAYcWZfBlsxDA50po">
+    <link rel="stylesheet" href="http://datamoney.net/css/pure.css" integrity="sha384-" crossorigin="anonymous">
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://datamoney.net/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="http://datamoney.net/css/grids-responsive-min.css">
+    <!--<![endif]-->    
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://datamoney.net/css/common-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="http://datamoney.net/css/common.css">
+    <!--<![endif]-->
+</head>
+<body>
+        <div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+        <a class="bor-r50p menu-logo" href="">
+              <div class="menu-logo-c3 bor-r50p">
+               <div class="menu-logo-c5 bor-r50p"></div>
+               <div class="menu-logo-c4 bor-r50p"></div>
+               <div class="menu-logo-color1">
+                <div class="menu-logo-color2"></div>
+               </div>
+              </div>
+        </a>
+        <a class="pure-menu-heading" href="/index">DataMoney.net</a>
+        <a class="pure-menu-mobile icon iconfont" href="/index">&#xe64d;</a>
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item pure-menu-selected"><a href="/" class="pure-menu-link">Home</a></li>
+            <li class="pure-menu-item"><a href="/data" class="pure-menu-link">Data[Tech]</a></li>
+            <li class="pure-menu-item"><a href="/money" class="pure-menu-link">Money[Finance]</a></li>
+            <li class="pure-menu-item"><a href="/share" class="pure-menu-link">Resource[Share]</a></li>
+        </ul>
+    </div>
+</div>
+    <div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">Linux-Ubuntu-Centos-Mac查看服务器ip</h1>
+        <p class="splash-subhead">
+        	andy发表:
+        </p>
+    </div>
+</div><div class="content-wrapper">
+    	
+	<div class="ribbon l-box-lrg pure-g">
+	        <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
+	            <pre class="coderead">
+					#&gt;0思路
+		命令行查网卡信息.还有你都有公网了,找第三方的api查.建议做成自定义命令方便使用.
+		#&gt;1系统自带的命令行
+		ip addr|grep inet|grep global
+
+		#&gt;2linux-全部可用
+		ifconfig
+		
+		#&gt;3第三方api
+		curl ifconfig.me
+		//提供服务的这类服务的比较多, 把上面的url换成, tool.lu/ip, https://www.ip.cn等等.如果你有给我分享哈~
+		#&gt;4 
+		mac osx本机专用的.
+		brew install archey
+		这个在mac本机使用相当舒服务
+		
+		#5
+		最好是加个自定义命令,下回能用是吧.
+		echo  alias myip=&quot;curl http://www.ifconfig.me&quot; &gt;&gt; ~/.bashrc &amp;&amp; source ~/.bashrc
+	            </pre>
+	       </div>
+	</div>
+	
+</div>
+<div class="footer tac">
+    &#169; Since 2018 by <a href="#" class="tfcfff">DataMoney.net</a>
+</div></body>
+    <script src="http://datamoney.net/js/jquery-224.min.js"></script>
+    <script src="http://datamoney.net/js/co.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-117495425-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-117495425-1');
+</script>
+</html>

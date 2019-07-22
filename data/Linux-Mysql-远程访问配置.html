@@ -1,0 +1,89 @@
+<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
+    <title>datamoney-Linux-Mysql-远程访问配置</title>
+    <meta name="csrf-token" content="c7jdZyylaLKw0yjH8SqsghFyRzYljeoGpW1Scarn">
+    <link rel="stylesheet" href="http://datamoney.net/css/pure.css" integrity="sha384-" crossorigin="anonymous">
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://datamoney.net/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="http://datamoney.net/css/grids-responsive-min.css">
+    <!--<![endif]-->    
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://datamoney.net/css/common-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="http://datamoney.net/css/common.css">
+    <!--<![endif]-->
+</head>
+<body>
+        <div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+        <a class="bor-r50p menu-logo" href="">
+              <div class="menu-logo-c3 bor-r50p">
+               <div class="menu-logo-c5 bor-r50p"></div>
+               <div class="menu-logo-c4 bor-r50p"></div>
+               <div class="menu-logo-color1">
+                <div class="menu-logo-color2"></div>
+               </div>
+              </div>
+        </a>
+        <a class="pure-menu-heading" href="/index">DataMoney.net</a>
+        <a class="pure-menu-mobile icon iconfont" href="/index">&#xe64d;</a>
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item pure-menu-selected"><a href="/" class="pure-menu-link">Home</a></li>
+            <li class="pure-menu-item"><a href="/data" class="pure-menu-link">Data[Tech]</a></li>
+            <li class="pure-menu-item"><a href="/money" class="pure-menu-link">Money[Finance]</a></li>
+            <li class="pure-menu-item"><a href="/share" class="pure-menu-link">Resource[Share]</a></li>
+        </ul>
+    </div>
+</div>
+    <div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">Linux-Mysql-远程访问配置</h1>
+        <p class="splash-subhead">
+        	andy发表:
+        </p>
+    </div>
+</div><div class="content-wrapper">
+    	
+	<div class="ribbon l-box-lrg pure-g">
+	        <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
+	            <pre class="coderead">
+						#&gt;1.得先有用户名和密码吧, 没有就创建,用户名是 remote ,密码是123456
+		#&gt;2.可忽略,查看当前用户状态: select host,user,password from user where user = &quot;remote&quot;;
+		#&gt;3.让 remote 为能从你的IP登陆,%表示哪个ip都能登陆 : update user set host = &quot;%&quot; where user = &quot;remote&quot;;
+		#&gt;4.让 remote 对数据库有操作权限,不然登陆什么也干不了 : grant all privileges on *.* to remote@&quot;%&quot; identified by &quot;123456&quot;;
+		#&gt;5.更新 : flush privileges; 相当于刷新保存你的设置 。》 
+		#&gt;6.可选,上面没升效,那就重启mysql:  sudo service mysql restart。 
+		#&gt;7.如果不行,再从1到6检查对不对。还不行？
+		
+		#&gt;8最终级处理,直接去修改mysql 配置文件,让他可以远程登陆:
+		参考路径: /etc/mysql/mysql.conf.d/mysqld.cnf 
+		就是这行: bind-address            = 127.0.0.1
+		修改成: bind-address            = 0.0.0.0
+		再来 》 更新 : flush privileges;》 重启mysql:  sudo service mysql restart。
+		就可以用你现在的账户密码去登陆了。
+	            </pre>
+	       </div>
+	</div>
+	
+</div>
+<div class="footer tac">
+    &#169; Since 2018 by <a href="#" class="tfcfff">DataMoney.net</a>
+</div></body>
+    <script src="http://datamoney.net/js/jquery-224.min.js"></script>
+    <script src="http://datamoney.net/js/co.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-117495425-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-117495425-1');
+</script>
+</html>

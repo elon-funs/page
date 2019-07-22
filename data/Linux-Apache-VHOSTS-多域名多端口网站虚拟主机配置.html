@@ -1,0 +1,159 @@
+<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
+    <title>datamoney-Linux-Apache-VHOSTS-多域名多端口网站虚拟主机配置</title>
+    <meta name="csrf-token" content="DCuFDWBJwVLfL7wuWFLudts00vzp9lEs6ZWxbIp8">
+    <link rel="stylesheet" href="http://datamoney.net/css/pure.css" integrity="sha384-" crossorigin="anonymous">
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://datamoney.net/css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="http://datamoney.net/css/grids-responsive-min.css">
+    <!--<![endif]-->    
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://datamoney.net/css/common-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="http://datamoney.net/css/common.css">
+    <!--<![endif]-->
+</head>
+<body>
+        <div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+        <a class="bor-r50p menu-logo" href="">
+              <div class="menu-logo-c3 bor-r50p">
+               <div class="menu-logo-c5 bor-r50p"></div>
+               <div class="menu-logo-c4 bor-r50p"></div>
+               <div class="menu-logo-color1">
+                <div class="menu-logo-color2"></div>
+               </div>
+              </div>
+        </a>
+        <a class="pure-menu-heading" href="/index">DataMoney.net</a>
+        <a class="pure-menu-mobile icon iconfont" href="/index">&#xe64d;</a>
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item pure-menu-selected"><a href="/" class="pure-menu-link">Home</a></li>
+            <li class="pure-menu-item"><a href="/data" class="pure-menu-link">Data[Tech]</a></li>
+            <li class="pure-menu-item"><a href="/money" class="pure-menu-link">Money[Finance]</a></li>
+            <li class="pure-menu-item"><a href="/share" class="pure-menu-link">Resource[Share]</a></li>
+        </ul>
+    </div>
+</div>
+    <div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">Linux-Apache-VHOSTS-多域名多端口网站虚拟主机配置</h1>
+        <p class="splash-subhead">
+        	andy发表:
+        </p>
+    </div>
+</div><div class="content-wrapper">
+    	
+	<div class="ribbon l-box-lrg pure-g">
+	        <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
+	            <pre class="coderead">
+					#&gt;0思路
+		这个也算是web开发的基本功了,详细写一下.一般情况都写思路和要点.
+		
+		#&gt;1配置文件内容-案例1
+		&lt;VirtualHost *:80&gt;
+			ServerName datamoney.net 
+			ServerAlias www.datamoney.net
+
+			DocumentRoot /code/datamoney/
+			Options Indexes FollowSymLinks
+
+			&lt;Directory &quot;/code/datamoney/public&quot;&gt;
+				AllowOverride All
+				&lt;IfVersion &lt; 2.4&gt;
+					Allow from all
+				&lt;/IfVersion&gt;
+				&lt;IfVersion &gt;= 2.4&gt;
+					Require all granted
+				&lt;/IfVersion&gt;
+			&lt;/Directory&gt;
+		&lt;/VirtualHost&gt;
+		
+		#&gt;2配置项目说明	
+			#&gt;2&gt;1端口配置
+
+			上文:&lt;VirtualHost *:80&gt;
+			改为&lt;VirtualHost *:8001&gt;,
+				&lt;VirtualHost *:8002&gt;,
+				&lt;VirtualHost *:8003&gt;
+			对应你在浏览器访问网站,
+			datamoney.net:80,
+			datamoney.net:8001,
+			datamoney.net:8002,
+			datamoney.net:8003,
+			就是3个网站.
+			聪明的你发现了吧, 后缀即端口不同.
+
+			#&gt;2&gt;2域名配置
+			ServerName 	datamoney.net 改为 
+			ServerName  8001.datamoney.net
+			ServerName  8002.datamoney.net
+			ServerName  8003.datamoney.net
+
+			对应你在浏览器
+			datamoney.net,
+			8001.datamoney.net,
+			8002.datamoney.net,
+			8003.datamoney.net,
+			又是3个网站
+
+			前面不同,即域名不同.
+
+		#&gt;2&gt;3字段解释
+			&lt;VirtualHost *:80&gt;
+			&quot;*:80&quot;-*表示啥字母数字都行,&quot;:80&quot;默认是80,我们没写就默认80了.  
+
+			ServerAlias www.datamoney.net//这行是别名. 多个域名的指向一个网站.
+			
+			DocumentRoot //配置的网站根目录,无论是否虚拟主机
+
+			Options Indexes FollowSymLinks //这个是可以入口文件类型.如index.html,index.php,index.htm
+
+		#&gt;3禁止访问
+			可以加当然可以减,能开启也可以禁止嘛.
+			一般是不想让人你直接用IP来访问.
+			当然除了禁止.还用别的办法对吧.如转给百度,自行发挥,按需使用.
+			&lt;VirtualHost *:80&gt;
+				ServerName 127.0.0.1
+				ServerAlias *
+				&lt;Location /&gt;
+				Order Allow,Deny
+				Deny from all
+				&lt;/Location&gt;
+			&lt;/VirtualHost&gt;
+
+		#&gt;4启用/禁用某个配置文件
+		a2dissite onevhost.conf //禁用此虚拟配置文件
+		a2ensite onevhost.conf //启用某虚拟配置文件 
+		
+		#&gt;5重启-是计算机世界的良药
+		重启的是服务!!!systemctl 或者 service都有服务管理功能,但具体不同另开篇细讲,apache在你的机器里叫什么名字,得自己看,httpd/apache2比较常见.
+		service apache2 restart.//service httpd restart
+		或者
+		systemctl apache2 restart.//systemctl httpd restart
+	            </pre>
+	       </div>
+	</div>
+	
+</div>
+<div class="footer tac">
+    &#169; Since 2018 by <a href="#" class="tfcfff">DataMoney.net</a>
+</div></body>
+    <script src="http://datamoney.net/js/jquery-224.min.js"></script>
+    <script src="http://datamoney.net/js/co.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-117495425-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-117495425-1');
+</script>
+</html>

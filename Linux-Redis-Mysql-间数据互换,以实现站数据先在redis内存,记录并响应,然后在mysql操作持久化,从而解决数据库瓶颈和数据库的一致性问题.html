@@ -4,9 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
-    <title>datamoney-Ubuntu-apt&amp;deb-package-安装过的软件包管理</title>
-    <meta name="csrf-token" content="34EIgSNeoGhPZCQ8RlzQAaAN3UYjVbVtqGaxS5hf">
+    <title>datamoney-Linux-Redis-Mysql-间数据互换,以实现站数据先在redis内存,记录并响应,然后在mysql操作持久化,从而解决数据库瓶颈和数据库的一致性问题</title>
+    <meta name="csrf-token" content="iLS8cMx8XFyUTx1xBCOStFTLTG8W0SLGm3LJXQUI">
     <link rel="stylesheet" href="http://datamoney.net/css/pure.css">
+    <link rel="stylesheet" href="http://datamoney.net/css/iconfont.css">
+
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="http://datamoney.net/css/grids-responsive-old-ie-min.css">
     <![endif]-->
@@ -44,28 +46,29 @@
 </div>
     <div class="splash-container">
     <div class="splash">
-        <h1 class="splash-head">Ubuntu-apt&amp;deb-package-安装过的软件包管理</h1>
+        <h1 class="splash-head">Linux-Redis-Mysql-间数据互换,以实现站数据先在redis内存,记录并响应,然后在mysql操作持久化,从而解决数据库瓶颈和数据库的一致性问题</h1>
         <p class="splash-subhead">
         	andy发表:
         </p>
     </div>
 </div><div class="content-wrapper">
-    	
-	<div class="ribbon l-box-lrg pure-g">
-	        <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
-	            <pre class="coderead">
-					#&gt;1apt
-	sudo apt list --installed
-	#&gt;2dpkg&amp;deb
-	sudo dpkg-query -l
-	            </pre>
-	       </div>
+    	<div class="ribbon l-box-lrg pure-g">
+	    <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1"><pre>#>0思路
+将 mysql.user 表存入 redis中 set key(user) value({
+  "field":["id","username","pwd","status"],
+   "row-id":{1:"1,andy,password,1",2:"2,elon,elonpass,1"}
+})
+数据类型结构等看需求变更。或如:
+<div class="coderead">
+{
+  "field":["id","username","pwd","status","table2中字段bb"],
+   "row-id":["1,andy,password,1,bb1","2,elon,elonpass,1,bb2"]
+}
+</div>
+解决用户写入,和热数据取出的问题即可,数据不必全吃内存</pre></div>
 	</div>
-	
 </div>
 <div class="footer tac">
     &#169; Since 2018 by <a href="#" class="tfcfff">DataMoney.net</a>
 </div></body>
- 
-
 </html>

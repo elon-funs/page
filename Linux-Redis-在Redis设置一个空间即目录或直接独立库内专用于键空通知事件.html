@@ -4,9 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
-    <title>datamoney-Linux-Ubuntu-PHP-Redis安装Redis服务</title>
-    <meta name="csrf-token" content="R1nSmBLe0mzq1SIiVDcjyfJlrS1ii5kdx5Ja47tJ">
+    <title>datamoney-Linux-Redis-在Redis设置一个空间即目录或直接独立库内专用于键空通知事件</title>
+    <meta name="csrf-token" content="zkDxAFP1j73oTNocvA1qyNvqLmNNF7OFyZZuOnlA">
     <link rel="stylesheet" href="http://datamoney.net/css/pure.css">
+    <link rel="stylesheet" href="http://datamoney.net/css/iconfont.css">
+
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="http://datamoney.net/css/grids-responsive-old-ie-min.css">
     <![endif]-->
@@ -44,30 +46,19 @@
 </div>
     <div class="splash-container">
     <div class="splash">
-        <h1 class="splash-head">Linux-Ubuntu-PHP-Redis安装Redis服务</h1>
+        <h1 class="splash-head">Linux-Redis-在Redis设置一个空间即目录或直接独立库内专用于键空通知事件</h1>
         <p class="splash-subhead">
         	andy发表:
         </p>
     </div>
 </div><div class="content-wrapper">
-    	
-	<div class="ribbon l-box-lrg pure-g">
-	        <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
-	            <pre class="coderead">
-					#&gt;1
-		sudo apt-get install redis-server php-redis
-        #&gt;2
-        php.ini中添加扩展extension=redis.so
-		#&gt;3
-		如果不行再在前面加上 extension＝igbinary.so
-	            </pre>
-	       </div>
+    	<div class="ribbon l-box-lrg pure-g">
+	    <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1"><pre>#>0思路
+	redis键空事件是延迟执行和定时任务不二的选择,只是redis的可靠性-[高可用redis],值得进一步研究,也由此可推理出,redis做定时,做延迟,做时间序列等时间任务。
+	redis 可以通过 hset user:name elon , user目录下的 key(name)=> value(elon);这样管理键值过期事件,更清晰些</pre></div>
 	</div>
-	
 </div>
 <div class="footer tac">
     &#169; Since 2018 by <a href="#" class="tfcfff">DataMoney.net</a>
 </div></body>
- 
-
 </html>

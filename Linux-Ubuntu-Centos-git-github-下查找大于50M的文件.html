@@ -4,9 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
-    <title>datamoney-Linux-Ubuntu-Centos-Mac查看服务器ip</title>
-    <meta name="csrf-token" content="fj3slkSmtnSybGTKHMJwP34sAYcWZfBlsxDA50po">
+    <title>datamoney-Linux-Ubuntu-Centos-git-github-下查找大于50M的文件</title>
+    <meta name="csrf-token" content="BkGkgikO8sigHzBALAe3KtI4FyKXPOpsIAqNtc0l">
     <link rel="stylesheet" href="http://datamoney.net/css/pure.css">
+    <link rel="stylesheet" href="http://datamoney.net/css/iconfont.css">
+
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="http://datamoney.net/css/grids-responsive-old-ie-min.css">
     <![endif]-->
@@ -44,43 +46,24 @@
 </div>
     <div class="splash-container">
     <div class="splash">
-        <h1 class="splash-head">Linux-Ubuntu-Centos-Mac查看服务器ip</h1>
+        <h1 class="splash-head">Linux-Ubuntu-Centos-git-github-下查找大于50M的文件</h1>
         <p class="splash-subhead">
         	andy发表:
         </p>
     </div>
 </div><div class="content-wrapper">
-    	
-	<div class="ribbon l-box-lrg pure-g">
-	        <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
-	            <pre class="coderead">
-					#&gt;0思路
-		命令行查网卡信息.还有你都有公网了,找第三方的api查.建议做成自定义命令方便使用.
-		#&gt;1系统自带的命令行
-		ip addr|grep inet|grep global
-
-		#&gt;2linux-全部可用
-		ifconfig
+    	<div class="ribbon l-box-lrg pure-g">
+	    <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1"><pre>#>0思路
+	因为github不接受大于100m的单个文件,你提交,push,等2小时后,以为是传完了, 但结果提示你失败.
+	尊贵的vip不在此列. 
 		
-		#&gt;3第三方api
-		curl ifconfig.me
-		//提供服务的这类服务的比较多, 把上面的url换成, tool.lu/ip, https://www.ip.cn等等.如果你有给我分享哈~
-		#&gt;4 
-		mac osx本机专用的.
-		brew install archey
-		这个在mac本机使用相当舒服务
-		
-		#5
-		最好是加个自定义命令,下回能用是吧.
-		echo  alias myip=&quot;curl http://www.ifconfig.me&quot; &gt;&gt; ~/.bashrc &amp;&amp; source ~/.bashrc
-	            </pre>
-	       </div>
+#>1
+	<div class="coderead">find ./data -type f -size +50000 </div>//查找到它
+#>2
+	<div class="coderead">find ./data -type f -size +50000 >> .gitignore</div>//忽略他</pre></div>
 	</div>
-	
 </div>
 <div class="footer tac">
     &#169; Since 2018 by <a href="#" class="tfcfff">DataMoney.net</a>
 </div></body>
- 
-
 </html>

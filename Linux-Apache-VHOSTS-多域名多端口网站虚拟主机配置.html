@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
     <title>datamoney-Linux-Apache-VHOSTS-多域名多端口网站虚拟主机配置</title>
-    <meta name="csrf-token" content="DCuFDWBJwVLfL7wuWFLudts00vzp9lEs6ZWxbIp8">
+    <meta name="csrf-token" content="JriZgC6VpZNy1xFbG0eJkFtf76WWau4FPjGhz3u8">
     <link rel="stylesheet" href="http://datamoney.net/css/pure.css">
+    <link rel="stylesheet" href="http://datamoney.net/css/iconfont.css">
+
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="http://datamoney.net/css/grids-responsive-old-ie-min.css">
     <![endif]-->
@@ -50,102 +52,92 @@
         </p>
     </div>
 </div><div class="content-wrapper">
-    	
-	<div class="ribbon l-box-lrg pure-g">
-	        <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
-	            <pre class="coderead">
-					#&gt;0思路
-		这个也算是web开发的基本功了,详细写一下.一般情况都写思路和要点.
+    	<div class="ribbon l-box-lrg pure-g">
+	    <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1"><pre>#>0思路
+	这个也算是web开发的基本功了,详细写一下.一般情况都写思路和要点.	
+#>1配置文件内容-案例1
+<div class="coderead">
+&#60;VirtualHost *:80&#62;
+	ServerName datamoney.net 
+	ServerAlias www.datamoney.net
+
+	DocumentRoot /code/datamoney/
+	Options Indexes FollowSymLinks
+
+	&#60;Directory "/code/datamoney/public"&#62;
+		AllowOverride All
+		&#60;IfVersion < 2.4&#62;
+			Allow from all
+		&#60;/IfVersion&#62;
+		&#60;IfVersion >= 2.4&#62;
+			Require all granted
+		&#60;/IfVersion&#62;
+	&#60;/Directory&#62;
+&#60;/VirtualHost&#62;
+</div>
+#>2配置项目说明	
+	#>2>1端口配置
+<div class="coderead">
+	上文:&#60;VirtualHost *:80&#62;
+	改为:&#60;VirtualHost *:8001&#62;,
+		&#60;VirtualHost *:8002&#62;,
+		&#60;VirtualHost *:8003&#62;
+</div>
+	对应你在浏览器访问网站,
+	datamoney.net:80,
+	datamoney.net:8001,
+	datamoney.net:8002,
+	datamoney.net:8003,
+	就是3个网站.
+	聪明的你发现了吧, 后缀即端口不同.
+
+	#>2>2域名配置
+<div class="coderead">
+	ServerName 	datamoney.net 改为 
+	ServerName  8001.datamoney.net
+	ServerName  8002.datamoney.net
+	ServerName  8003.datamoney.net
+</div>
+	对应你在浏览器
+	datamoney.net,
+	8001.datamoney.net,
+	8002.datamoney.net,
+	8003.datamoney.net,
+	又是3个网站
+	//前面不同,即域名不同.
+
+	#>2>3字段解释
+	<span class="coderead">&#60;VirtualHost *:&#62;</span>"*:80"-*表示啥字母数字都行,":80"默认是80,我们没写就默认80了.  
+	<span class="coderead">ServerAlias www.datamoney.net</span>//这行是别名. 多个域名的指向一个网站.
+	<span class="coderead">DocumentRoot /code/datamoney/</span>//配置的网站根目录,无论是否虚拟主机
+	<span class="coderead">Options Indexes FollowSymLinks</span>//这个是可以入口文件类型.如index.html,index.php,index.htm
+
+#>3禁止访问
+	可以加当然可以减,能开启也可以禁止嘛.
+	一般是不想让人你直接用IP来访问.
+	当然除了禁止.还用别的办法对吧.如转给百度,自行发挥,按需使用.
+<div class="coderead">
+	&#60;VirtualHost *:80&#62;
+		ServerName 127.0.0.1
+		ServerAlias *
+		&#60;Location /&#62;
+		Order Allow,Deny
+		Deny from all
+		&#60;/Location&#62;
+	&#60;/VirtualHost&#62;
+</div>
+#>4启用/禁用某个配置文件
+	<span class="coderead">a2dissite onevhost.conf </span>//禁用此虚拟配置文件
+	<span class="coderead">a2ensite onevhost.conf </span>//启用某虚拟配置文件
 		
-		#&gt;1配置文件内容-案例1
-		&lt;VirtualHost *:80&gt;
-			ServerName datamoney.net 
-			ServerAlias www.datamoney.net
-
-			DocumentRoot /code/datamoney/
-			Options Indexes FollowSymLinks
-
-			&lt;Directory &quot;/code/datamoney/public&quot;&gt;
-				AllowOverride All
-				&lt;IfVersion &lt; 2.4&gt;
-					Allow from all
-				&lt;/IfVersion&gt;
-				&lt;IfVersion &gt;= 2.4&gt;
-					Require all granted
-				&lt;/IfVersion&gt;
-			&lt;/Directory&gt;
-		&lt;/VirtualHost&gt;
-		
-		#&gt;2配置项目说明	
-			#&gt;2&gt;1端口配置
-
-			上文:&lt;VirtualHost *:80&gt;
-			改为&lt;VirtualHost *:8001&gt;,
-				&lt;VirtualHost *:8002&gt;,
-				&lt;VirtualHost *:8003&gt;
-			对应你在浏览器访问网站,
-			datamoney.net:80,
-			datamoney.net:8001,
-			datamoney.net:8002,
-			datamoney.net:8003,
-			就是3个网站.
-			聪明的你发现了吧, 后缀即端口不同.
-
-			#&gt;2&gt;2域名配置
-			ServerName 	datamoney.net 改为 
-			ServerName  8001.datamoney.net
-			ServerName  8002.datamoney.net
-			ServerName  8003.datamoney.net
-
-			对应你在浏览器
-			datamoney.net,
-			8001.datamoney.net,
-			8002.datamoney.net,
-			8003.datamoney.net,
-			又是3个网站
-
-			前面不同,即域名不同.
-
-		#&gt;2&gt;3字段解释
-			&lt;VirtualHost *:80&gt;
-			&quot;*:80&quot;-*表示啥字母数字都行,&quot;:80&quot;默认是80,我们没写就默认80了.  
-
-			ServerAlias www.datamoney.net//这行是别名. 多个域名的指向一个网站.
-			
-			DocumentRoot //配置的网站根目录,无论是否虚拟主机
-
-			Options Indexes FollowSymLinks //这个是可以入口文件类型.如index.html,index.php,index.htm
-
-		#&gt;3禁止访问
-			可以加当然可以减,能开启也可以禁止嘛.
-			一般是不想让人你直接用IP来访问.
-			当然除了禁止.还用别的办法对吧.如转给百度,自行发挥,按需使用.
-			&lt;VirtualHost *:80&gt;
-				ServerName 127.0.0.1
-				ServerAlias *
-				&lt;Location /&gt;
-				Order Allow,Deny
-				Deny from all
-				&lt;/Location&gt;
-			&lt;/VirtualHost&gt;
-
-		#&gt;4启用/禁用某个配置文件
-		a2dissite onevhost.conf //禁用此虚拟配置文件
-		a2ensite onevhost.conf //启用某虚拟配置文件 
-		
-		#&gt;5重启-是计算机世界的良药
-		重启的是服务!!!systemctl 或者 service都有服务管理功能,但具体不同另开篇细讲,apache在你的机器里叫什么名字,得自己看,httpd/apache2比较常见.
-		service apache2 restart.//service httpd restart
-		或者
-		systemctl apache2 restart.//systemctl httpd restart
-	            </pre>
-	       </div>
+#>5重启-是计算机世界的良药
+	重启的是服务!!!systemctl 或者 service都有服务管理功能,但具体不同另开篇细讲,apache在你的机器里叫什么名字,得自己看,httpd/apache2比较常见.
+	<span class="coderead">service apache2 restart.//service httpd restart</span>
+	或者
+	<span class="coderead">systemctl apache2 restart.//systemctl httpd restart</span></pre></div>
 	</div>
-	
 </div>
 <div class="footer tac">
     &#169; Since 2018 by <a href="#" class="tfcfff">DataMoney.net</a>
 </div></body>
- 
-
 </html>

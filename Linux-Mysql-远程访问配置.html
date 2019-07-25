@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
     <title>datamoney-Linux-Mysql-远程访问配置</title>
-    <meta name="csrf-token" content="c7jdZyylaLKw0yjH8SqsghFyRzYljeoGpW1Scarn">
+    <meta name="csrf-token" content="eP42VlKNolFirKpS1c6TwmhF7YZxvp7HyepfkVvF">
     <link rel="stylesheet" href="http://datamoney.net/css/pure.css">
+    <link rel="stylesheet" href="http://datamoney.net/css/iconfont.css">
+
     <!--[if lte IE 8]>
         <link rel="stylesheet" href="http://datamoney.net/css/grids-responsive-old-ie-min.css">
     <![endif]-->
@@ -50,32 +52,33 @@
         </p>
     </div>
 </div><div class="content-wrapper">
-    	
-	<div class="ribbon l-box-lrg pure-g">
-	        <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
-	            <pre class="coderead">
-						#&gt;1.得先有用户名和密码吧, 没有就创建,用户名是 remote ,密码是123456
-		#&gt;2.可忽略,查看当前用户状态: select host,user,password from user where user = &quot;remote&quot;;
-		#&gt;3.让 remote 为能从你的IP登陆,%表示哪个ip都能登陆 : update user set host = &quot;%&quot; where user = &quot;remote&quot;;
-		#&gt;4.让 remote 对数据库有操作权限,不然登陆什么也干不了 : grant all privileges on *.* to remote@&quot;%&quot; identified by &quot;123456&quot;;
-		#&gt;5.更新 : flush privileges; 相当于刷新保存你的设置 。》 
-		#&gt;6.可选,上面没升效,那就重启mysql:  sudo service mysql restart。 
-		#&gt;7.如果不行,再从1到6检查对不对。还不行？
-		
-		#&gt;8最终级处理,直接去修改mysql 配置文件,让他可以远程登陆:
-		参考路径: /etc/mysql/mysql.conf.d/mysqld.cnf 
-		就是这行: bind-address            = 127.0.0.1
-		修改成: bind-address            = 0.0.0.0
-		再来 》 更新 : flush privileges;》 重启mysql:  sudo service mysql restart。
-		就可以用你现在的账户密码去登陆了。
-	            </pre>
-	       </div>
+    	<div class="ribbon l-box-lrg pure-g">
+	    <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1"><pre>#>1.得先有用户名和密码吧, 没有就创建如:用户名是 remote ,密码是123456
+#>2.可忽略,查看当前用户状态
+<span class="coderead">select host,user,password from user where user = "remote";</span>
+#>3.让 remote 能从你所在的IP登陆,%表示哪个ip都能登陆
+<span class="coderead">update user set host = "%" where user = "remote"</span>
+#>4.让 remote 对数据库有操作权限,不然登陆什么也干不了
+<span class="coderead">grant all privileges on *.* to remote@"%" identified by "123456";</span>
+#>5.更新相当于刷新保存你的设置
+<span class="coderead">flush privileges;</span>
+#>6.可选,上面没升效,那就重启mysql: 
+<span class="coderead">sudo service mysql restart</span>
+#>7.如果不行,再从1到6检查对不对。先检查一次,还不行？
+
+#>8最终级处理,直接去修改mysql配置文件,让他可以远程登陆:
+#>8>1
+参考路径: /etc/mysql/mysql.conf.d/mysqld.cnf 
+就是这行:<span class="coderead"> bind-address            = 127.0.0.1</span>
+修改成: <span class="coderead"> bind-address            = 0.0.0.0</span>
+#>8>2再来更新
+<span class="coderead"> flush privileges</span> 
+#>8>3重启mysql
+<span class="coderead">sudo service mysql restart</span>
+就可以用你现在的账户密码去登陆了。   </pre></div>
 	</div>
-	
 </div>
 <div class="footer tac">
     &#169; Since 2018 by <a href="#" class="tfcfff">DataMoney.net</a>
 </div></body>
- 
-
 </html>

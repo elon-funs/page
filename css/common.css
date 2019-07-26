@@ -27,7 +27,6 @@ h1,h2,h3,h4,h5,h6,label {color: #333;}
 .tfcfff{color:#fff;}
 
 .img-list{width: 100%;display: none;}
-.icon-list{display: inline-block;}
 
 
 /*
@@ -178,7 +177,6 @@ margin:0em .6em;
  */
 @media (min-width: 64em) {/* We increase the header font size even more */.splash-head {font-size: 220%;}
       .img-list{padding-right: 2em;display: block;}
-      .icon-list{display: none;}
 }
 /*common-oob-css-param*/
 /*logo-color*/
@@ -205,33 +203,18 @@ margin:0em .6em;
 .bgcorange2{background-color:#ff7f00;}
 .bgcred{background-color:#ff0000;}
 .bgcwhite{background-color:#fff}
-/*logo-color*/
-
-.cubuntu{color:#d0372b;}
-.cwindows{color:#2261b7;}
-.cweibo{color:#ef0923;}
-.ctxweibo{color:#09bfef;}
-.cqq{color:#ea0404;}
-.cdouban{color:#55a532;}
-.cnodejs{color:#4da228;}
-.cgift{color:#d82383;}
-.cfriends{color:#e0bd29;}
-.capache{color:#a71d5d;}
-.cwechat{color:#55a532;}
-.cwangyi{color:#a53a32;}
-.cbitcion{color:#ecb425;}
-.ccss{color:#b5a40c;}
-
 
 .fl{float: left;}.fr{float: right;}.fclr{clear:both;}
 .aline{text-decoration:underline;}
 
 /*common-oob-css-module*/
-.content-subhead {color: #1f8dd6;font-size:120%;font-weight: bold;padding-left:2em;}
+.content-subhead {color: #1f8dd6;font-size:120%;font-weight: bold;}
 .coderead{background: #111; color: #ccc; border-radius:8px;margin-right:3%;}
-span.coderead{padding-left:1em;padding-right: 1em; }
-.icon-logo{
-    width: 32px;
-    height: 38px;
-    display: inline-block;
+
+/*blog-post-from;*/
+.blog-form{
+  border: none;
+  margin: 0;
+  background: none;
 }
+.blog-form-word{background: #111; color: #ccc; border-radius:8px;margin-right:3%;}

@@ -135,9 +135,9 @@
 .icon-zhongtumoshi:before { content: "\e61e"; }
 .icon-31wentifankui:before { content: "\e620"; }
 .icon-31huiyuan:before { content: "\e622"; }
-.icon-mac:before { content: "\e667"; }
+.icon-mac:before, .icon-ios:before, .icon-osx:before, .icon-iphone:before, .icon-apple:before{ content: "\e667"; color: #111;}
 .icon-windows:before { content: "\e668"; color:#2261b7;}
-.icon-android:before { content: "\e669"; }
+.icon-android:before { content: "\e669"; color: #5db314;}
 .icon-gongzuoliuchengtu:before { content: "\e67d"; }
 .icon-xinrenkecheng:before { content: "\e67e"; }
 .icon-xinrenzhinan:before { content: "\e67f"; }
@@ -218,7 +218,7 @@
 .icon-redis:before { content: "\e6ab";color:#b30e13; }
 .icon-producthunt:before { content: "\e6ac"; }
 .icon-codeigniter:before { content: "\e6ad"; }
-.icon-git:before { content: "\e6ae"; color: #5db314;}
+.icon-git:before { content: "\e6ae"; color: #b35b04;}
 .icon-adobeacrobatreader:before { content: "\e6af"; }
 .icon-laravel:before { content: "\e6b0"; color: #d24962;}
 .icon-swift:before { content: "\e6b1"; }

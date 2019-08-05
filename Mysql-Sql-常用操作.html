@@ -93,7 +93,12 @@
   创建数据库
   <span class="coderead">create database 库名</span>
   删除数据库
-  <span class="coderead">drop database 库名</span></pre></div>
+  <span class="coderead">drop database 库名</span>
+  导出命令
+  <span class="coderead">mysqldump -uroot -p123456  --lock-all-tables --flush-logs yourdbname > yourdbname_2019.sql</span>
+  导入命令-先登陆进入mysql
+  <span class="coderead">source $path/yourdbname_2019.sql</span>
+</pre></div>
 	</div>
 </div>
 <div class="footer tac">

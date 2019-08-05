@@ -1,0 +1,70 @@
+  # 80端口,把这台设为默认主机,Php网站解析,拒绝.ht的访问
+  server {
+    listen 80;
+    listen [::]:80 default_server;
+
+    server_name datamoney.net;
+    root /code/datamoney/public;
+
+    index index.php index.html index.htm;
+
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_pass php-upstream;
+        fastcgi_index index.php;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_read_timeout 600;
+        include fastcgi_params;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+  }
+
+
+  # 80端口,泛解析,多域名,转发请求到另一台服务器,请注意[*]包含所有二级但不包含一级所都是一对两个,
+  server {
+      listen       80;
+      server_name  *.datamoney.com datamoney.com *.data.com data.com money.com *.money.com;
+
+      location / {
+              proxy_pass http://web.datamoney.net;
+              proxy_set_header   Host    $host;
+              proxy_set_header   X-Real-IP   $remote_addr;
+              proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+      }
+  }
+
+  #80端口,域名泛解析,test测试前缀的域名转发测试服务器上的指定端口
+  server {
+      listen       80;
+      server_name  ~^test.*\.datamoney\.net$;
+
+      location / {
+              proxy_pass http://testserver.datamoney.net:8082;
+              proxy_set_header   Host    $host;
+              proxy_set_header   X-Real-IP   $remote_addr;
+              proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+      }
+  }
+
+
+  #80端口,域名泛解析,并排除测试前缀域名,其他转发到正式服务器上的指定端口/目录
+  server {
+      listen       80;
+      server_name  ~([^test])(.*)\.datamoney\.net$;
+
+      location / {
+              proxy_pass http://www.datamoney.net:8089/admin/;
+              proxy_set_header   Host    $host;
+              proxy_set_header   X-Real-IP   $remote_addr;
+              proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+      }    
+  }

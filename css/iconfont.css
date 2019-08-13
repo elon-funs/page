@@ -168,7 +168,7 @@
 .icon-shipin1:before { content: "\e766"; }
 .icon-role:before { content: "\e73f"; }
 .icon-people:before { content: "\e740"; }
-.icon-ecode:before { content: "\e77a"; }
+.icon-qrcode:before { content: "\e77a"; }
 .icon-wangyiyunyinle:before { content: "\e77b"; }
 .icon-Audit:before { content: "\e741"; }
 .icon-fe-webpack:before { content: "\e77c"; }
@@ -289,7 +289,7 @@
 .icon-react:before { content: "\e6ed"; }
 .icon-protoio:before { content: "\e6ee"; }
 .icon-adobephotoshop:before { content: "\e6ef"; }
-.icon-codeschool:before { content: "\e6f0"; }
+.icon-script:before, .icon-code:before,.icon-coding:before ,.icon-praraming:before ,.icon-praram:before { content: "\e6f0"; }
 .icon-webstorm:before { content: "\e6f1"; }
 .icon-pingup:before { content: "\e6f2"; }
 .icon-visualstudiocode:before { content: "\e6f3"; }
@@ -413,3 +413,4 @@
 .icon-gold:before {content:"\e79c";color:#d4ba30;}
 .icon-gupiao:before, .icon-invest:before, .icon-hangqing:before {content:"\e61c";color:#982424;}
 .icon-lianjie:before {content: "\e821";color: #2828e8;}
+.icon-app:before {content: "\e705";color: #7d6b6b;}

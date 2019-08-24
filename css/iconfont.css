@@ -451,7 +451,7 @@
 .icon-copy:before { content:"\e7c1";}
 .icon-meiguoguan:before { content:"\e7c2";}
 .icon-loufang:before { content:"\e7c3";}
-.icon-meiguoguoqi:before { content:"\e7c5";}
+.icon-usa:before { content:"\e7c5";color:#3232a0;}
 .icon-meiguoyiliao:before { content:"\e7c7";}
 .icon-iconyt:before { content:"\e7c9";}
 .icon-bussinesscard:before { content:"\e7ca";}
@@ -464,7 +464,7 @@
 .icon-windows10:before { content:"\e7d3";}
 .icon-Alibaba:before { content:"\e809";}
 .icon-logistic:before { content:"\e811";}
-.icon-forbidden:before { content:"\e7d6";}
+.icon-beijing:before { content:"\e7d6";color: red;}
 .icon-fb:before { content:"\e7d7";}
 .icon-html-copy:before { content:"\e7d8";}
 .icon-qqzone:before { content:"\e7db";}
@@ -483,7 +483,7 @@
 .icon-alipay:before { content:"\e7f3";}
 .icon-tencent:before { content:"\e7f5";}
 .icon-zhengxin:before { content:"\e7f6";}
-.icon-guoqi:before { content:"\e7f8";}
+.icon-china:before { content:"\e7f8";color: #da2d29;}
 .icon-ie:before { content:"\e7f9";}
 .icon-coding:before ,.icon-praraming:before ,.icon-praram:before, .icon-chengxubao:before { content:"\e801";}
 .icon-dunpai:before { content:"\e803";}

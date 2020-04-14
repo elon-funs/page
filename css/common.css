@@ -209,7 +209,7 @@ margin:0em .6em;
 
 /*common-oob-css-module*/
 .content-subhead {color: #1f8dd6;font-size:120%;font-weight: bold;}
-.coderead{background: #111; color: #ccc; border-radius:8px;padding:0 1.5em;}
+.coderead{background: #222222; color: #ccc; border-radius:8px;padding:0 1.5em;}
 pre{white-space: pre-wrap;word-wrap: break-word;}
 /*blog-post-from;*/
 .blog-form{

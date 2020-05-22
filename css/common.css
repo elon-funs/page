@@ -58,8 +58,7 @@ a.pure-button-primary {background: white;color: green;border-radius: 5px;font-si
 .home-menu .pure-menu-heading {color: white;font-weight: 400;font-size: 120%;}
 
 .home-menu a {color: #fff;}
-.home-menu li a:hover,
-.home-menu li a:focus {background: none;border: none;color: #fefd17;}
+.home-menu li a:hover, .home-menu li a:focus {background: none;border: none;color: #fefd17;}
 
 .bor-r50p{  border-radius: 50%; }
 .menu-logo{
@@ -164,9 +163,6 @@ margin:0em .6em;
 .splash-head {font-size: 200%;}
 
 /* We remove the border-separator assigned to .l-box-lrg */.l-box-lrg {border: none;}
-.pure-menu-horizontal .pure-menu-list {display: inline-block;}
-.pure-menu-horizontal .pure-menu-mobile{display:none;}
-
 }
 
 /*
@@ -176,7 +172,9 @@ margin:0em .6em;
  * 1024px -bigger than ipadpro. 
  */
 @media (min-width: 64em) {/* We increase the header font size even more */.splash-head {font-size: 220%;}
-      .img-list{padding-right: 2em;display: block;}
+  .img-list{padding-right: 2em;display: block;}
+  .pure-menu-horizontal .pure-menu-list {display: inline-block;}
+  .pure-menu-horizontal .pure-menu-mobile{display:none;}
 }
 /*common-oob-css-param*/
 /*logo-color*/

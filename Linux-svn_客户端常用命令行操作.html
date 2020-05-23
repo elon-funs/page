@@ -51,6 +51,72 @@
     <div class="ribbon l-box-lrg pure-g">
       <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
       <pre>
+#>0.svn 安装及使用说明
+  独自看懂帮助命令的能力,才是真正的硬核的知识
+  <code class="coderead">[yum|apt] install subversion; svn help</code>
+#>1.代码操作全流程掌握常用命令
+  <div class="coderead">
+  //把远程仓库下载到本地
+  svn co =  svn checkout
+  svn co svn://ip:port/res/name [localname] [--username  andy]
+  
+  //查看下仓库的描述信息
+  svn info
+  
+  //查看文件变更的记录
+  svn log [-l 5 -v -q] 
+  
+  //查看当前本地改了哪些文件
+  svn st = svn status
+
+  //详细的看改的文件里的具体代码内容
+  svn diff /path/file.txt
+
+  //跟版本号25的那次版本对比下变更,25是版本号
+  svn -r 25 -v -q  
+  svn cat -r 25
+  
+  //清除本地svn记录-能减少svn up冲突.其他情况svn出错时,执行此命令再继续操作也管用
+  svn cleanup
+
+  //更新线上最新代码-提交前先更新原则
+  svn up = svn update
+  
+  //svn st 中?开头的文件等新建的文件都得先add,一次一个文件
+  svn add path/change.txt
+  
+  //如果有多个文件呢?我用这个方法不行
+  svn add path/*.js
+
+  //多文件用参数提交,svn [add | ci]等操作通用
+  svn add --targets path/arg.txt
+  path/arg.txt文件中内容如下
+  path/change.txt
+  path/change1.txt
+  path/change2.txt
+  path/change3.txt
+  
+  //有些文件不想提交加个ignore吧,此方法费劲不太好用推荐用changelist
+  svn proplist svn:ignore file.txt 
+
+  //不想提交的文件加入一个ignore组,简便曲线完成ignore,
+  //?开头的新文件要先add再加ignore组,add操作对远程无影响,只在你本地
+  //ignore-on-commit是自定义组名随便写
+  svn cl=svn changelist
+  svn cl ignore-on-commit local.config.txt
+  svn cl ignore-on-commit --targets arg.txt
+  
+  //多文件提交,加上辅助命令才好用
+  svn st | cut -c 9- | head -n 4 | tail -n +2 > arg.txt
+            |            |          |            |-这个文件也来命令生成  
+            |            |          |-------------从第2行开始到最后一行
+            |            |--------取1-4行别的不要,具体情况看自己的变更文件
+            |---------------把每行的前面9个字符删除如'M   path/file.txt'
+  
+  //提交代码吧
+  svn ci -m '提交点啥吧' path/change.txt
+  svn ci -m '提交点啥吧' --targets arg.txt
+  </div>
       </pre>
     </div>
   </div>

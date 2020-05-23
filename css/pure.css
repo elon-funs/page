@@ -665,7 +665,7 @@ legend {
     background-color:#fefd17
 }
 .pure-menu-selected .pure-menu-link, .pure-menu-selected .pure-menu-link:visited {
-    color: #111;
+    color: #fefd17;
     background-color: #fff;
     border-radius: 0.5em;
 }

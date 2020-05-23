@@ -664,10 +664,14 @@ legend {
 .pure-menu-active>.pure-menu-link, .pure-menu-link:focus, .pure-menu-link:hover {
     background-color:#fefd17
 }
-.pure-menu-selected .pure-menu-link, .pure-menu-selected .pure-menu-link:visited {
-    color: #fefd17;
+.pure-menu-selected .pure-menu-link{
+    color: #111;
     background-color: #fff;
     border-radius: 0.5em;
+}
+.pure-menu-selected>.pure-menu-link:hover{
+    color: #fefd17;
+    background-color: #111;
 }
 .pure-table {
     empty-cells:show;

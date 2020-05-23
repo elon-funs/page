@@ -147,7 +147,7 @@ margin:0em .6em;
 
 /* moile menu*/
 .pure-menu-horizontal .pure-menu-list {display: none;}
-.pure-menu-horizontal .pure-menu-mobile{float: right;font-size: 2em;margin:.25em}
+.pure-menu-horizontal .pure-menu-mobile{float: right;font-size: 2em;margin:.25em; color:#eee;}
 /*
  * -- TABLET (AND UP) MEDIA QUERIES --
  * On tablets and other medium-sized devices, we want to customize some
@@ -216,3 +216,4 @@ pre{white-space: pre-wrap;word-wrap: break-word;}
   background: none;
 }
 .blog-form-word{background: #111; color: #ccc; border-radius:8px;margin-right:3%;}
+/*menu animate*/

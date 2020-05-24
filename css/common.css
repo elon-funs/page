@@ -104,10 +104,11 @@ margin:0em .6em;
             height: 2.8em;
             float: right;
             border-radius: 100%;
-            background: -webkit-radial-gradient(transparent 0.28em,#8B00FF 0.6em,#0000FF 0.7em,#00FFFF 0.9em,#00FF00 1em,#FFFF00 1.15em,#FF7F00 1.3em,#FF0000 1.4em);
-            background: -moz-radial-gradient(transparent 0.28em,#8B00FF 0.56m,#0000FF 0.7em,#00FFFF 0.89m,#00FF00 1em,#FFFF00 1.15em,#FF7F00 1.3em,#FF0000 1.4em);
-            background: radial-gradient(transparent 0.28em,#8B00FF 0.6em,#0000FF 0.7em,#00FFFF 0.9em,#00FF00 1em,#FFFF00 1.15em,#FF7F00 1.3em,#FF0000 1.4em);
+            background: -webkit-radial-gradient(transparent 0.36em,#8b0080 0.5em,#ff00ff 0.55em,#9400D3 0.63em,#0000ff 0.66em,#2020ea 0.71em,#00FFFF 0.778em,#1ff1f1 0.85em,#00ff00 0.88em,#00ff00 0.93em,#7FFF00 0.98em,#FFFF00 1.05em,#FFD700 1.12em,#FF7F00 1.18em,#ef492b 1.26em,#ef1616 1.3em,#FF0000 1.34em,#111 1.34em);
+            background: -moz-radial-gradient(transparent 0.36em,#8b0080 0.5em,#ff00ff 0.55em,#9400D3 0.63em,#0000ff 0.66em,#2020ea 0.71em,#00FFFF 0.778em,#1ff1f1 0.85em,#00ff00 0.88em,#00ff00 0.93em,#7FFF00 0.98em,#FFFF00 1.05em,#FFD700 1.12em,#FF7F00 1.18em,#ef492b 1.26em,#ef1616 1.3em,#FF0000 1.34em,#111 1.34em);
+            background: radial-gradient(transparent 0.36em,#8b0080 0.5em,#ff00ff 0.55em,#9400D3 0.63em,#0000ff 0.66em,#2020ea 0.71em,#00FFFF 0.778em,#1ff1f1 0.85em,#00ff00 0.88em,#00ff00 0.93em,#7FFF00 0.98em,#FFFF00 1.05em,#FFD700 1.12em,#FF7F00 1.18em,#ef492b 1.26em,#ef1616 1.3em,#FF0000 1.34em,#111 1.34em);
 }
+
 /*
  * -- SPLASH STYLES --
  * This is the blue top section that appears on the page.

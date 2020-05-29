@@ -37,7 +37,7 @@
         <a class="pure-menu-heading" href="/index.html">DataMoney.net</a>
         <a class="pure-menu-mobile icon iconfont" href="/index.html">&#xe64d;</a>
         <ul class="pure-menu-list">
-            <li class="pure-menu-item pure-menu-selected"><a href="/" class="pure-menu-link">Home</a></li>
+            <li class="pure-menu-item pure-menu-SELECTed"><a href="/" class="pure-menu-link">Home</a></li>
             <li class="pure-menu-item"><a href="/data.html" class="pure-menu-link">Data[Tech]</a></li>
             <li class="pure-menu-item"><a href="/money.html" class="pure-menu-link">Money[Finance]</a></li>
             <li class="pure-menu-item"><a href="/share.html" class="pure-menu-link">Resource[Share]</a></li>
@@ -58,63 +58,71 @@
 #>1.表操作
   <div class="coderead">
   ---- 创建表  ---- 
-  create table tablename(field1 varchar(50), field2 int(10))
+  CREATE table tablename(field1 varchar(50), field2 int(10))
 
   ---- 使用旧表创建新表  ---- 
-  create table newtable like oldtable
-  create table 表名 as select 列1, 列2... from 旧表 definition only
+  CREATE table newtable LIKE oldtable
+  CREATE table 表名 as SELECT 列1, 列2... FROM 旧表 definition only
 
   ---- 删除表  ---- 
-  drop table 表名
+  DROP table 表名
   
   ---- 显示所有表  ---- 
-  show tables
+  SHOW tables
   
   ---- 显示表详情  ---- 
   desc 表名
-  show create table 表名
+  SHOW CREATE table 表名
   
   ---- 清空表  ---- 
-  truncate table 表名
-  delete from 表名
+  TRUNCATE table 表名
+  DELETE FROM 表名
 
   ---- 修改表名  ---- 
-  alter table 原名 rename to 新名
+  ALTER table 原名 RENAME to 新名
 
   ---- 添加列  ---- 
-  alter table 表名 add column 列名 类型
+  ALTER table 表名 ADD column 列名 类型
   
   ---- 删除列  ---- 
-  alter table 表名 drop column 列名
+  ALTER table 表名 DROP column 列名
   
   ---- 修改列名  ---- 
-  alter table 表名 change 原名 新名 类型 
+  ALTER table 表名 CHANGE 原名 新名 类型 
   
   ---- 修改列类型  ---- 
-  alter table 表名 modify 列名 类型
+  ALTER table 表名 MODIFY 列名 类型
   
   ---- 更新数据  ---- 
-  update 表名 set 字段=值 where 条件
+  UPDATE 表名 SET 字段=值 WHERE 条件
   
   ---- 删除数据  ---- 
-  delete from 表名 where 条件
+  DELETE FROM 表名 WHERE 条件
   
   ---- 插入数据  ---- 
-  insert into 表名(字段1, 字段2...) values(值1, 值2...)
-  
+  INSERT INTO 表名(字段1, 字段2...) VALUES(值1, 值2...)
+  ---- 批量插入 ----
+  INSERT INTO `table_name` 
+    (`column1`,`column2`,`column3`,`column4`)
+    VALUES
+    ('value1-1','value1-2','value1-3','value1-4'),
+    ('value2-1','value2-2','value2-3','value2-4'),
+    ('value3-1','value3-2','value3-3','value3-4');
+
+
   ---- 排序  ---- 
-  select * from 表名 order by 字段 [desc|asc]
+  SELECT * FROM 表名 ORDER BY 字段 [desc|asc]
   
   ---- 统计行数  ---- 
-  select count(*) from 表名
+  SELECT COUNT(*) FROM 表名
   </div>
 #>2.数据库
   <div class="coderead">
   ---- 创建数据库  ---- 
-  create database 库名
+  CREATE DATABASE 库名
   
   ---- 删除数据库  ---- 
-  drop database 库名
+  DROP DATABASE 库名
   
   ----  导出命令  ----
   mysqldump -uroot -p123456  --lock-all-tables --flush-logs yourdbname > yourdbname.sql
@@ -124,7 +132,7 @@
   source $path/yourdbname_2019.sql
   </div> 
 #>3.取巧操作
-  #>3.1.批量处理技巧-批量更新
+  #>3.1.批量处理技巧-CASE WHEN 函数的使用
   需求:李家5个儿子ID1-5,每个名字加上名字,每个id有不同的名字是吧
 
   <div class="coderead">
@@ -132,54 +140,56 @@
   UPDATE `table` SET `name`= '李家儿子' WHERE id>0 AND id<6
 
   ---- 更新5条,各有各的名字,一般写5条sql操作5次 ----
-    UPDATE `table` SET `name`= '李一' WHERE id=1;
-    UPDATE `table` SET `name`= '李二' WHERE id=2;
-    UPDATE `table` SET `name`= '李三' WHERE id=3;
-    UPDATE `table` SET `name`= '李四' WHERE id=4;
-    UPDATE `table` SET `name`= '李五' WHERE id=5;
+  UPDATE `table` SET `name`= '李一' WHERE id=1;
+  UPDATE `table` SET `name`= '李二' WHERE id=2;
+  UPDATE `table` SET `name`= '李三' WHERE id=3;
+  UPDATE `table` SET `name`= '李四' WHERE id=4;
+  UPDATE `table` SET `name`= '李五' WHERE id=5;
 
-  ---- 比较骚的写法 ----
+  ---- CASE 的写法 ----
   UPDATE `table` SET `name`= 
-  CASE `id`
-    WHEN id=1 THEN '李一' 
-    WHEN id=2 THEN '李二' 
-    WHEN id=3 THEN '李三' 
-    WHEN id=4 THEN '李四' 
-    WHEN id=5 THEN '李五'
-  END
-  WHERE `id` IN(1,2,3,4,5)
+    CASE `id`
+      WHEN id=1 THEN '李一' 
+      WHEN id=2 THEN '李二' 
+      WHEN id=3 THEN '李三' 
+      WHEN id=4 THEN '李四' 
+      WHEN id=5 THEN '李五'
+    END
+    WHERE `id` IN(1,2,3,4,5);
+  
+  ---- CASE查询 -----  
+  SELECT 
+    CASE `city`
+      WHEN '长沙' THEN '湖南' 
+      WHEN '衡阳' THEN '湖南'
+      WHEN '海口' THEN '海南' 
+      WHEN '三亚' THEN '海南'
+      ELSE '其他' 
+    END 
+    AS province,
+    SUM(nums) 
+  FROM `pepole`
+  GROUP BY `province`;
+
   </div>
-    Q:为什么不用WHERE条件不是 WHERE `id` >0 and `id`<6 ？
-    A:这种写法是合法可行的,但是0-6之间会全部覆盖.如果[id=5,name=李五]这条你不想要修改,条件范围会还是修改id=5的数据.反之如果表中没有id=8的这条数据,你写了when id=8 也是可以的,建议用WHERE IN 改哪些写哪些！！
-    
+    Q:为什么WHERE条件不是 WHERE `id` >0 and `id`<6 ？
+    A:这种写法是合法可行的,但是0-6之间会全部覆盖.如果[id=5,name=李五]这条你不想要修改,条件范围会还是修改id=5的数据.反之如果表中没有id=8的这条数据,你写了when id=8 也是可以的,建议用WHERE IN 改哪些写哪些！！    
     现在大部分框架都已集成有此功能,batchsave方法等,原理是一样的.
 
 
-  #>3.2.批量处理技巧-批量插入
+  #>3.2.高效的状态统计 COUNT(`status`=1 or NULL)
+  统计 users 表中会员性别分类统计，会员账户状态分类统计
+  sex字段表示性别[-1未知|0女|1男]; 
+  status字段表示用户状态[0|新注册|1付款会员|-1被冻结];
   <div class="coderead">
-  INSERT INTO `table` 
-  (`clumns1`,`clumns2`,`clumns3`,`clumns4`)
-  VALUES
-  ('value1-1','value1-2','value1-3','value1-4'),
-  ('value2-1','value2-2','value2-3','value2-4'),
-  ('value3-1','value3-2','value3-3','value3-4');
-  </div>
-
-
-  #>3.2.高效的状态统计
-    需求:friends表中统计出用户的添加的好友,性别占比统计,添加好友的结果统计.
-    字段说明:status:好友申请的任务执行结果.0发出添加申请没得到结果也没超时,1完任务成功完成,-1任务失败,等N多不同值
-    result:任务完成后返回的结果 0未知,1搜到好友账号但人家没同意,-1好友账号不存在,-2好友账号性别信息不知道,等N多不同的值
-  <div class="coderead">
-  SELECT count(`id`) total,
-        count(`result`=-2 or NULL) unknow_sex,
-        count(`result`=-1 or NULL) un_register,
-        count(`result`=1 or NULL) register,
-        count(`result`=0 or NULL) unknow,
-        count(`status`>-1 or NULL) status_failed_total,
-        count( (`status`=0 and `result`<1 ) or NULL) status_unsuccess_total,
-        count(`status`=1 or NULL) status_success_total
-        FROM `friends`;
+  SELECT COUNT(`id`) total,
+    COUNT(`sex`=-1 OR NULL) unknow_sex,
+    COUNT(`sex`=1 OR NULL) male,
+    COUNT(`sex`=0 OR NULL) female,
+    COUNT(`status`>-1 OR NULL) active_users,
+    COUNT( (`status`=0 AND `sex`=0 ) OR NULL) new_female_users,
+    COUNT(`status`=1 OR NULL) pay_user
+  FROM `users`;
   </div>         
 </pre></div>
 	</div>

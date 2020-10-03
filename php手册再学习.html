@@ -1,0 +1,298 @@
+<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
+    <title>php手册再学习</title>
+    <link rel="stylesheet" href="./css/pure.css">
+    <link rel="stylesheet" href="./css/iconfont.css">
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="./css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="./css/grids-responsive-min.css">
+    <!--<![endif]-->    
+<!--<![endif]-->
+</head>
+<body>
+  <div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+      <a class="bor-r50p menu-logo" href="#">
+        <div class="menu-logo-c3 bor-r50p">
+          <div class="menu-logo-c5 bor-r50p"></div>
+          <div class="menu-logo-c4 bor-r50p"></div>
+          <div class="menu-logo-color1">
+            <div class="menu-logo-color2"></div>
+          </div>
+        </div>
+      </a>
+      <a class="pure-menu-heading" href="/index.html">DataMoney.net</a>
+      <a class="pure-menu-mobile icon iconfont" href="/index.html">&#xe64d;</a>
+      <ul class="pure-menu-list">
+        <li class="pure-menu-item pure-menu-selected"><a href="/" class="pure-menu-link">Home</a></li>
+        <li class="pure-menu-item"><a href="/data.html" class="pure-menu-link">Data[Tech]</a></li>
+        <li class="pure-menu-item"><a href="/money.html" class="pure-menu-link">Money[Finance]</a></li>
+        <li class="pure-menu-item"><a href="/share.html" class="pure-menu-link">Resource[Share]</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="splash-container">
+    <div class="splash">
+      <h1 class="splash-head">php手册再学习</h1>
+      <p class="splash-subhead">andy发表:txt_time</p>
+    </div>
+  </div>
+  <div class="content-wrapper">
+    <div class="ribbon l-box-lrg pure-g">
+      <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
+      <pre>
+        <div class="coderead">cmd shell</div>      
+1.回调函数call_user_func,call_user_func_array的使用,除了在调用类下面方法时使用变量名，别的想不到，也不知道其应用场景
+<?php
+namespace bar;
+
+class Foo {
+  public function test($name,$age,$hight) {
+    $data= "name: {$name}!\n age: {$age}!\n hight: {$hight}!\n";
+    return $data;
+    }
+
+  public function test2($name) {
+    return "my name is  ${name}!";
+  }
+}
+
+$rst=call_user_func_array(['\bar\Foo','test'], ['Han',20,168]);
+var_dump($rst);
+$rst=call_user_func_array(__NAMESPACE__ .'\Foo::test', ['mao',200,180]);
+var_dump($rst);
+
+// call_user_func — 把第一个参数作为回调函数调用
+$rst=call_user_func(__NAMESPACE__ .'\Foo::test2', 'mao');
+var_dump($rst);
+?>
+
+2.函数func_num_args参数获取与内存数据分析,func_get_arg(1)第1个参数的值
+
+<?php
+// $arr = get_defined_functions();
+$a=memory_get_usage();
+var_dump($a);
+$a=memory_get_peak_usage();
+var_dump($a);
+$a=filter_list();
+var_dump($a);
+// print_r($arr);
+
+3.filter、ctype　PHP的默认安装库，比正则和内置函数框架函数都要高效，冷门实用利器
+过滤功能的使用php内置函数，对数据类型格式过滤，依赖于底层库ctype 
+https://www.php.net/manual/zh/book.filter.php
+
+filter库
+filter_has_var — 检测是否存在指定类型的变量
+filter_id — 返回与某个特定名称的过滤器相关联的id
+filter_input_array — 获取一系列外部变量，并且可以通过过滤器处理它们
+filter_input — 通过名称获取特定的外部变量，并且可以通过过滤器处理它
+filter_list — 返回所支持的过滤器列表
+filter_var_array — 获取多个变量并且过滤它们
+filter_var — 使用特定的过滤器过滤一个变量
+
+Ctype库
+ctype_alnum — 做字母和数字字符检测
+ctype_alpha — 做纯字符检测
+ctype_cntrl — 做控制字符检测
+ctype_digit — 做纯数字检测
+ctype_graph — 做可打印字符串检测，空格除外
+ctype_lower — 做小写字符检测
+ctype_print — 做可打印字符检测
+ctype_punct — 检测可打印的字符是不是不包含空白、数字和字母
+ctype_space — 做空白字符检测
+ctype_upper — 做大写字母检测
+ctype_xdigit — 检测字符串是否只包含十六进制字符
+
+4.compact 与expact 把多个变量组成数组，反向把数组拆成多个变量
+array_merge_recursive数组递归合并 
+
+5.
+生成器yiled 等　节约内存而已
+<?php
+$file='./3.result.php';
+// $c=file_get_contents($file);
+$a=memory_get_usage();
+var_dump($a);//12039648
+foreach (getfile($file) as $key => $value) {
+    echo $value.PHP_EOL;
+}
+
+function getfile($file){
+    $f=fopen($file, 'r');
+    while ($line=fgets($f) ) {
+        yield $line;
+    }
+    fclose($f);
+}
+$b=memory_get_usage();
+var_dump($b);//396000
+
+// 测试文件的结果节约30倍
+
+6.pctnl 进程管理，实现多子进程,对于耗时长的任务，并行各自独立执行的任务有用。进程间不可互相通信      
+<?php
+declare(ticks = 1);
+//信号处理函数
+function sig_handler($signo)
+{
+    echo $signo.PHP_EOL;
+}
+
+//安装信号处理器
+// pcntl_signal(SIGTERM, "sig_handler");
+// pcntl_signal(SIGHUP,  "sig_handler");
+// pcntl_signal(SIGUSR1, "sig_handler");
+// pcntl_signal(SIGUSR2, "sig_handler");
+
+// 或者在PHP 4.3.0以上版本可以使用对象方法
+// pcntl_signal(SIGUSR1, [$obj, "do_something"]);
+
+//向当前进程发送SIGUSR1信号
+// posix_kill(posix_getpid(), SIGUSR2);
+  
+
+  pcntl_async_signals(TRUE);
+    pcntl_signal(SIGUSR1, "sig_handler");
+    posix_kill(posix_getpid(), SIGUSR);
+
+  function everyMinute() {
+    echo time();
+  }
+
+  $wait = 3;
+  $next = 0;
+
+  while (TRUE) {
+    $stamp = time();
+    do {
+      if ($stamp >= $next) { break; }
+      $diff = $next - $stamp;
+      sleep($diff);
+      $stamp = time();
+    } while ($stamp < $next);
+   
+    everyMinute();
+   
+    $next = $stamp + $wait;
+    sleep($wait);
+  }
+7.pctnl 进程管理，实现多子进程
+<?php
+function index()
+
+    {
+
+        pcntl_signal(SIGCHLD, SIG_IGN); //如果父进程不关心子进程什么时候结束,子进程结束后，内核会回收。  
+
+        $max = 8000000;
+
+        $workers = 100;
+
+        
+
+        $pids = array();
+
+        for($i = 0; $i < $workers; $i++){
+
+            $pids[$i] = pcntl_fork();
+
+            $pid = posix_getpid();
+
+            switch ($pids[$i]) {
+
+                case -1:
+
+                    echo "fork error : {$i} \r\n";
+
+                    exit;
+
+                case 0:
+
+                    $param = array(
+
+                        'lastid' => $max / $workers * $i,
+
+                        'maxid' => $max,
+
+                    );
+
+                    doSomething($pid, $param);
+
+                    exit;
+
+                default:
+
+                    break;
+
+            }
+
+        }
+
+        
+
+        foreach ($pids as $i => $pid) {
+
+            if($pid) {
+
+                //父进程会得到子进程号，所以这里是父进程执行的逻辑  
+
+                //如果不需要阻塞进程，而又想得到子进程的退出状态，则可以注释掉pcntl_wait($status)语句，或写成：  
+
+                pcntl_wait($status,WNOHANG); //等待子进程中断，防止子进程成为僵尸进程。
+
+                //pcntl_waitpid($pid, $status);
+
+            }
+
+        }
+
+    }
+
+
+
+// 可以看到那个子进程在处理哪些数据
+
+    function doSomething($filename, $param)
+
+    {
+
+        for ($i = $param['lastid']; $i < $param['maxid']; $i++) {
+
+            $path = "./test/";
+
+            if (!is_dir($path)){
+
+                mkdir($path, 0777, true);
+
+            }
+
+            $content = $i . '|';
+
+            $file = $path . $filename . ".txt";
+
+            file_put_contents($file, $content, FILE_APPEND);
+
+        }
+        sleep(1);
+        file_put_contents($file, microtime(), FILE_APPEND);
+
+    }
+
+index();
+</pre>
+    </div>
+  </div>
+</div>
+<div class="footer tac">
+  &#169; Since 2018 by <a href="#" class="tfcfff">DataMoney.net</a>
+</div>
+</body>
+</html>

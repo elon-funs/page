@@ -1,0 +1,96 @@
+<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
+    <title>txt_title</title>
+    <link rel="stylesheet" href="./css/pure.css">
+    <link rel="stylesheet" href="./css/iconfont.css">
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="./css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="./css/grids-responsive-min.css">
+    <!--<![endif]-->    
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="./css/common-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="./css/common.css">
+    <!--<![endif]-->
+</head>
+<body>
+  <div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+      <a class="bor-r50p menu-logo" href="#">
+        <div class="menu-logo-c3 bor-r50p">
+          <div class="menu-logo-c5 bor-r50p"></div>
+          <div class="menu-logo-c4 bor-r50p"></div>
+          <div class="menu-logo-color1">
+            <div class="menu-logo-color2"></div>
+          </div>
+        </div>
+      </a>
+      <a class="pure-menu-heading" href="/index.html">DataMoney.net</a>
+      <a class="pure-menu-mobile icon iconfont" href="/index.html">&#xe64d;</a>
+      <ul class="pure-menu-list">
+        <li class="pure-menu-item pure-menu-selected"><a href="/" class="pure-menu-link">Home</a></li>
+        <li class="pure-menu-item"><a href="/data.html" class="pure-menu-link">Data[Tech]</a></li>
+        <li class="pure-menu-item"><a href="/money.html" class="pure-menu-link">Money[Finance]</a></li>
+        <li class="pure-menu-item"><a href="/share.html" class="pure-menu-link">Resource[Share]</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="splash-container">
+    <div class="splash">
+      <h1 class="splash-head">txt_title</h1>
+      <p class="splash-subhead">andy发表:txt_time</p>
+    </div>
+  </div>
+  <div class="content-wrapper">
+    <div class="ribbon l-box-lrg pure-g">
+      <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
+      <pre>
+        <div class="coderead">cmd shell</div>
+mysql_master <-> canal_server <-> otter_client <-> redis_or_kafka
+#>0.  mysql_master
+  #开启mysql的binlog模块
+  log-bin=mysql-bin
+  binlog-format=ROW
+  # server_id需保证唯一，不能和canal的slaveId重复
+  server_id=121
+  # 需要同步的数据库名称
+  binlog-do-db=test_canal
+  # 忽略的数据库，建议填写
+  binlog-ignore-db=mysql
+  # 启动mysql时不启动grant-tables授权表
+  skip-grant-tables
+
+CREATE USER 'webroot' IDENTIFIED BY 'pwd123qwe';
+GRANT ALL PRIVILEGES ON *.* TO 'webroot'@'%';
+FLUSH PRIVILEGES;
+select * from mysql.user where user='webroot' \G;
+查看Repl_slave_priv,Repl_client_priv中的为Y是对的
+
+
+RESET master;
+show master status;
+show binary logs;
+
+create database datamoney;
+create table user (name varchar(255), age varchar(10));
+insert into user (name,age) values('a','18');
+mysqlbinlog --base64-output=decode-rows -v mysql-bin.000001
+
+
+#>1.
+      </pre>
+    </div>
+  </div>
+</div>
+<div class="footer tac">
+  &#169; Since 2018 by <a href="#" class="tfcfff">DataMoney.net</a>
+</div>
+</body>
+</html>

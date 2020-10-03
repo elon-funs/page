@@ -64,6 +64,24 @@
     git add .   
     git commit -m "msg" 
     git push origin master
+    
+    已在本地添加提交还没推到远程之前，如git add -f .　　gcam等操作后
+    git reset --soft HEAD^
+    这样就成功的撤销了你的commit　仅仅是撤回commit操作，您写的代码还在。
+
+遇到这个种问题，一般都是网络原因
+Failed to connect to github.com port 443:connection timed out(connection refused) 
+
+git config --global http.proxy http://127.0.0.1:1080
+ 
+git config --global https.proxy http://127.0.0.1:1080
+
+
+取消代理
+
+取消全局代理：
+git config --global --unset http.proxy
+ 
 
 </div>
 </pre></div>

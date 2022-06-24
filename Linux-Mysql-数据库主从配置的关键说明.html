@@ -1,0 +1,119 @@
+<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
+    <title>datamoney-Linux-Mysql-数据库主从配置的关键说明</title>
+    <meta name="csrf-token" content="k3TNcdAOwP8HBdPOEGAThvuEMyTcuJZoQMRZ97Jq">
+    <link rel="stylesheet" href="./css/pure.css">
+    <link rel="stylesheet" href="./css/iconfont.css">
+
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="./css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="./css/grids-responsive-min.css">
+    <!--<![endif]-->    
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="./css/common-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="./css/common.css">
+    <!--<![endif]-->
+</head>
+<body>
+        <div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+        <a class="bor-r50p menu-logo" href="">
+              <div class="menu-logo-c3 bor-r50p">
+               <div class="menu-logo-c5 bor-r50p"></div>
+               <div class="menu-logo-c4 bor-r50p"></div>
+               <div class="menu-logo-color1">
+                <div class="menu-logo-color2"></div>
+               </div>
+              </div>
+        </a>
+        <a class="pure-menu-heading" href="/index.html">DataMoney.net</a>
+        <a class="pure-menu-mobile icon iconfont" href="/index.html">&#xe64d;</a>
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item pure-menu-selected"><a href="/" class="pure-menu-link">Home</a></li>
+            <li class="pure-menu-item"><a href="/data.html" class="pure-menu-link">Data[Tech]</a></li>
+            <li class="pure-menu-item"><a href="/money.html" class="pure-menu-link">Money[Finance]</a></li>
+            <li class="pure-menu-item"><a href="/share.html" class="pure-menu-link">Resource[Share]</a></li>
+        </ul>
+    </div>
+</div>
+    <div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">Linux-Mysql-数据库主从配置的关键说明</h1>
+        <p class="splash-subhead">
+        	andy发表:
+        </p>
+    </div>
+</div><div class="content-wrapper">
+    	<div class="ribbon l-box-lrg pure-g">
+	    <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1"><pre>#>0思路
+    比如:你从a数据库导出a.sql，在b机导入a.sql，你说a和ｂ这段数据是不是完全一样的？？一样吧？！好，那a和b约定好，只要a一动，就如上述传一次数据，你说ab是否就同步了呢？当然啦！那这个工作能不能自动化，而且更延时最小几乎是实时的，要高效还要稳定可靠？
+    能！都能！！--- 前辈都想到了，程序也写好了，这就是同步技术。而且前辈人想到的更多更全更远，看官请听。
+    
+    #>0>1. mysql 有bin-log(二进制日志)这个功能。二进制=可移植可执行[就是哪台机拿到都能直接运行]，日志=实时记录，有了它，人工从a库导出a.sql，这一步有了自动化级的实现方式。
+    #>0>2.让a,b机器建立关联，tcp/Ip保连接，哪台生成日志并发出，哪N台接收并执行。
+    #>0>3.其他配置项，传输的频次，能不能只传其中一个库等等 甚至二进制程序如何生成,怎么运行,怎么传输等等不属于配置问题了, mysql已实现。不用操心,想研究个具体实现的请进入另一个主题
+
+#>1. 第一台机器叫主服,让他来生成日志并发出。给这台mysql起个名字server-id = 1 开启二进制日志,给日志起个文件名,存放路径也可以自己定,不写就默认
+    <div class="coderead">
+    echo "server-id=1
+    log_bin=mysql-bin
+    log_error=mysql-bin.err
+    lower_case_table_names=1"
+    >> /etc/mysql/conf.d/my.cnf
+    </div>
+    // 不需要同步哪些-就设置不产生日志,另一台就自然没了来源。
+    <div class="coderead">
+    binlog-ignore-db = mysql  
+    binlog-ignore-db = test
+    </div>  
+    // 只同步指定数据库,除此之外,其他不同步  
+    <div class="coderead">
+    binlog-do-db = game
+    binlog-ignore-db = information_schema  
+    </div>
+#>2.在主服务器创建一个专门的同步用户,一般都是只读嘛
+    <span class="coderead">GRANT REPLICATION SLAVE ON *.* TO "slave"@"%" IDENTIFIED BY "123456";</span>
+#>3.
+    ！！建好后千万别乱动！！,一动就有日志了呀，是不是这个道理？走,搞另一台服务器叫从服吧。
+    
+#>4.在从服务器上加入对应的主服务器配置信息。
+    上文有提到要分配 server-id,别忘记了,
+    master就是主机嘛， master的ip/数据库端口/同步用的账户/密码/日志文件名/位置。
+    下面不能全复制！！后两项会一直变，第5告诉你怎么查。
+    <div class="coderead">
+    CHANGE MASTER TO 
+    MASTER_HOST="172.19.6.2",
+    MASTER_PORT=3306,
+    MASTER_USER = "slave",
+    MASTER_PASSWORD = "123456",
+    MASTER_LOG_FILE = "slave-mysql-bin.000001",
+    MASTER_LOG_POS = 430;
+    </div>
+#>5其他用到的命令
+    mysql文件配置文件地址 /etc/mysql/conf.d/my.cnf                  
+    <span class="coderead">start slave</span>//开始同步。
+    <span class="coderead">stop slave</span>;//修改配置信息时, 需要先停止同步服务。
+    <span class="coderead">show slave status</span> //看你配置成功没
+    <span class="coderead">show master status</span>//第4项用得上 
+    <span class="coderead">show grants for "slave"@"%"</span> //看你要复制的库有没有权限。
+
+#>6特别提示
+    流程确保没问题，但同步配置失败3-5次是正常的。
+    两台数据库同时配置完成,再操作建库建表等数据操作.关键问题:就是不要在没同步前产生日志.
+    配置成功后建议，要多试几次，测试几个功能点。如果配置失败，你就更要多再多试几次。
+
+</pre></div>
+	</div>
+</div>
+<div class="footer tac">
+    &#169; Since 2018 by <a href="#" class="tfcfff">DataMoney.net</a>
+</div></body>
+</html>

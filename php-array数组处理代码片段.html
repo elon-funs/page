@@ -1,0 +1,115 @@
+<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
+    <title>PHP数组处理高级操作</title>
+    <link rel="stylesheet" href="./css/pure.css">
+    <link rel="stylesheet" href="./css/iconfont.css">
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="./css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="./css/grids-responsive-min.css">
+    <!--<![endif]-->    
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="./css/common-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="./css/common.css">
+    <!--<![endif]-->
+</head>
+<body>
+  <div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+      <a class="bor-r50p menu-logo" href="#">
+        <div class="menu-logo-c3 bor-r50p">
+          <div class="menu-logo-c5 bor-r50p"></div>
+          <div class="menu-logo-c4 bor-r50p"></div>
+          <div class="menu-logo-color1">
+            <div class="menu-logo-color2"></div>
+          </div>
+        </div>
+      </a>
+      <a class="pure-menu-heading" href="/index.html">DataMoney.net</a>
+      <a class="pure-menu-mobile icon iconfont" href="/index.html">&#xe64d;</a>
+      <ul class="pure-menu-list">
+        <li class="pure-menu-item pure-menu-selected"><a href="/" class="pure-menu-link">Home</a></li>
+        <li class="pure-menu-item"><a href="/data.html" class="pure-menu-link">Data[Tech]</a></li>
+        <li class="pure-menu-item"><a href="/money.html" class="pure-menu-link">Money[Finance]</a></li>
+        <li class="pure-menu-item"><a href="/share.html" class="pure-menu-link">Resource[Share]</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="splash-container">
+    <div class="splash">
+      <h1 class="splash-head">txt_title</h1>
+      <p class="splash-subhead">andy发表:txt_time</p>
+    </div>
+  </div>
+  <div class="content-wrapper">
+    <div class="ribbon l-box-lrg pure-g">
+      <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
+      <pre>
+        <div class="coderead">cmd shell</div>
+/**
+ * 从二维数组中取出自己要的KEY值
+ * @param  array $arrData
+ * @param string $key
+ * @param $im true 返回逗号分隔
+ * @return array
+ */
+function filter_value($arrData, $key, $im = false)
+{
+    $re = [];
+    foreach ($arrData as $k => $v) {
+        if (isset($v[$key])) $re[] = $v[$key];
+    }
+    if (!empty($re)) {
+        $re = array_flip(array_flip($re));
+        sort($re);
+    }
+
+    return $im ? implode(',', $re) : $re;
+}
+
+/**
+ * 从二维数组中取出自己想的键组成新的数组
+ * @param  array $arrData
+ * @param string $key
+ * @param $im true 返回逗号分隔
+ * @return array
+ */
+    public function arr_from_keys($array, $keys)
+    {
+        if (!is_array($keys)) {
+            $keys = explode(',', $keys);
+        }
+        (array) $keys;
+        if (count($keys) < 1) {
+            return [];
+        }
+        $result = [];
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                foreach ($value as $k => $v) {
+                    if (in_array($k, $keys)) {
+                        $result[$key][$k] = $v;
+                    }
+                }
+            } else {
+                $result[$key] = $value;
+            }
+        }
+        return $result;
+    }
+      </pre>
+    </div>
+  </div>
+</div>
+<div class="footer tac">
+  &#169; Since 2018 by <a href="#" class="tfcfff">DataMoney.net</a>
+</div>
+</body>
+</html>

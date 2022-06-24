@@ -1,0 +1,138 @@
+<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
+    <title>datamoney-Nginx-Server-网站虚拟主机配置端口还目录转发</title>
+    <meta name="csrf-token" content="1kVm9HNrq9cBYdhT14gSWxe4kZ16TCzdiO1SfBvc">
+    <link rel="stylesheet" href="./css/pure.css">
+    <link rel="stylesheet" href="./css/iconfont.css">
+
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="./css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="./css/grids-responsive-min.css">
+    <!--<![endif]-->    
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="./css/common-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="./css/common.css">
+    <!--<![endif]-->
+</head>
+<body>
+        <div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+        <a class="bor-r50p menu-logo" href="">
+              <div class="menu-logo-c3 bor-r50p">
+               <div class="menu-logo-c5 bor-r50p"></div>
+               <div class="menu-logo-c4 bor-r50p"></div>
+               <div class="menu-logo-color1">
+                <div class="menu-logo-color2"></div>
+               </div>
+              </div>
+        </a>
+        <a class="pure-menu-heading" href="/index.html">DataMoney.net</a>
+        <a class="pure-menu-mobile icon iconfont" href="/index.html">&#xe64d;</a>
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item pure-menu-selected"><a href="/" class="pure-menu-link">Home</a></li>
+            <li class="pure-menu-item"><a href="/data.html" class="pure-menu-link">Data[Tech]</a></li>
+            <li class="pure-menu-item"><a href="/money.html" class="pure-menu-link">Money[Finance]</a></li>
+            <li class="pure-menu-item"><a href="/share.html" class="pure-menu-link">Resource[Share]</a></li>
+        </ul>
+    </div>
+</div>
+    <div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">Nginx-Server-网站虚拟主机配置端口还目录转发</h1>
+        <p class="splash-subhead">
+        	andy发表:
+        </p>
+    </div>
+</div><div class="content-wrapper">
+    	<div class="ribbon l-box-lrg pure-g">
+	    <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1"><pre>#>1
+先上份配置好的虚拟主机,下面每一个server{..}都是一台虚拟主机.<a href="http://datamoney.net/data/nginx_server_conf.txt" download="nginx_server_conf.txt">点击下载</a>
+<div class="coderead">
+  # 80端口,把这台设为默认主机,Php网站解析,拒绝.ht的访问
+  server {
+    listen 80;
+    listen [::]:80 default_server;
+
+    server_name datamoney.net;
+    root /code/datamoney/public;
+
+    index index.php index.html index.htm;
+
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+
+    location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_pass php-upstream;
+        fastcgi_index index.php;
+        fastcgi_buffers 16 16k;
+        fastcgi_buffer_size 32k;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_read_timeout 600;
+        include fastcgi_params;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+  }
+
+
+  # 80端口,泛解析,多域名,转发请求到另一台服务器,请注意[*]包含所有二级但不包含一级所都是一对两个,
+  server {
+      listen       80;
+      server_name  *.datamoney.com datamoney.com *.data.com data.com money.com *.money.com;
+
+      location / {
+              proxy_pass http://web.datamoney.net;
+              proxy_set_header   Host    $host;
+              proxy_set_header   X-Real-IP   $remote_addr;
+              proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+      }
+  }
+
+  #80端口,域名泛解析,test测试前缀的域名转发测试服务器上的指定端口
+  server {
+      listen       80;
+      server_name  ~^test.*\.datamoney\.net$;
+
+      location / {
+              proxy_pass http://testserver.datamoney.net:8082;
+              proxy_set_header   Host    $host;
+              proxy_set_header   X-Real-IP   $remote_addr;
+              proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+      }
+  }
+
+
+  #80端口,域名泛解析,并排除测试前缀域名,其他转发到正式服务器上的指定端口/目录
+  server {
+      listen       80;
+      server_name  ~([^test])(.*)\.datamoney\.net$;
+
+      location / {
+              proxy_pass http://www.datamoney.net:8089/admin/;
+              proxy_set_header   Host    $host;
+              proxy_set_header   X-Real-IP   $remote_addr;
+              proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+      }    
+  }
+</div>
+#>2.
+apache请参考:<a href="/Linux-Apache-VHOSTS-多域名多端口网站虚拟主机配置.html">Linux-Apache-VHOSTS-多域名多端口网站虚拟主机配置</a>
+</pre></div>
+	</div>
+</div>
+<div class="footer tac">
+    &#169; Since 2018 by <a href="#" class="tfcfff">DataMoney.net</a>
+</div></body>
+</html>

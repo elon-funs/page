@@ -1,0 +1,72 @@
+<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
+    <title>datamoney-Linux-Reids-Mysql-redis&lt;=&gt;Mysql数据转移在命令行中进行比程序中效率高几十倍</title>
+    <meta name="csrf-token" content="hW7GI0EM8hqyUsJ2YVCSMIcWt3KRIC8qVK74egXD">
+    <link rel="stylesheet" href="./css/pure.css">
+    <link rel="stylesheet" href="./css/iconfont.css">
+
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="./css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="./css/grids-responsive-min.css">
+    <!--<![endif]-->    
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="./css/common-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="./css/common.css">
+    <!--<![endif]-->
+</head>
+<body>
+        <div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+        <a class="bor-r50p menu-logo" href="">
+              <div class="menu-logo-c3 bor-r50p">
+               <div class="menu-logo-c5 bor-r50p"></div>
+               <div class="menu-logo-c4 bor-r50p"></div>
+               <div class="menu-logo-color1">
+                <div class="menu-logo-color2"></div>
+               </div>
+              </div>
+        </a>
+        <a class="pure-menu-heading" href="/index.html">DataMoney.net</a>
+        <a class="pure-menu-mobile icon iconfont" href="/index.html">&#xe64d;</a>
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item pure-menu-selected"><a href="/" class="pure-menu-link">Home</a></li>
+            <li class="pure-menu-item"><a href="/data.html" class="pure-menu-link">Data[Tech]</a></li>
+            <li class="pure-menu-item"><a href="/money.html" class="pure-menu-link">Money[Finance]</a></li>
+            <li class="pure-menu-item"><a href="/share.html" class="pure-menu-link">Resource[Share]</a></li>
+        </ul>
+    </div>
+</div>
+    <div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">Linux-Reids-Mysql-redis&lt;=&gt;Mysql数据转移在命令行中进行比程序中效率高几十倍</h1>
+        <p class="splash-subhead">
+        	andy发表:
+        </p>
+    </div>
+</div><div class="content-wrapper">
+    	<div class="ribbon l-box-lrg pure-g">
+	    <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1"><pre>#>0思路
+  redis命令行模式下支付 pipe符命令.那如果在mysql导出时进行格式化成redis命令,然后接入pipe命令直接执行即可.
+#>1
+  redis格式例如: <span class="coderead">hset key value [expired|etc]</span>
+#>2
+  在mysql中创建视图表[视图表在内存中比较高效] 
+  <span class="coderead">select contact(hset,"空格",key,"空格",value,"空格"[expired],"空格"[ect])</span>
+  //以生成 redis 原生命令格式,把这段mysql操作,写成 sql脚本,在命令行直接执行即可.
+  <span class="coderead">mysql stats_db --skip-column-names --raw < mysql_to_redis.sql | redis-cli --pipe</span>
+本文参考:<a href="https://www.oschina.net/translate/mysql-to-redis-in-one-step">https://www.oschina.net/translate/mysql-to-redis-in-one-step</a>
+为表尊重注明出处,并非照搬或者转发,如有冒犯请联系 andy@datamoney.net 必立即删除</pre></div>
+	</div>
+</div>
+<div class="footer tac">
+    &#169; Since 2018 by <a href="#" class="tfcfff">DataMoney.net</a>
+</div></body>
+</html>

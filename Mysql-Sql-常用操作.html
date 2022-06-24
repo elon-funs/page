@@ -1,0 +1,210 @@
+<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
+    <title>datamoney-Mysql-Sql-常用操作</title>
+    <meta name="csrf-token" content="6v1XHsdKpCKViYYkVBbP9nBEdDPBnFjPR852RAhT">
+    <link rel="stylesheet" href="./css/pure.css">
+    <link rel="stylesheet" href="./css/iconfont.css">
+
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="./css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="./css/grids-responsive-min.css">
+    <!--<![endif]-->    
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="./css/common-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="./css/common.css">
+    <!--<![endif]-->
+</head>
+<body>
+        <div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+        <a class="bor-r50p menu-logo" href="">
+              <div class="menu-logo-c3 bor-r50p">
+               <div class="menu-logo-c5 bor-r50p"></div>
+               <div class="menu-logo-c4 bor-r50p"></div>
+               <div class="menu-logo-color1">
+                <div class="menu-logo-color2"></div>
+               </div>
+              </div>
+        </a>
+        <a class="pure-menu-heading" href="/index.html">DataMoney.net</a>
+        <a class="pure-menu-mobile icon iconfont" href="/index.html">&#xe64d;</a>
+        <ul class="pure-menu-list">
+            <li class="pure-menu-item pure-menu-SELECTed"><a href="/" class="pure-menu-link">Home</a></li>
+            <li class="pure-menu-item"><a href="/data.html" class="pure-menu-link">Data[Tech]</a></li>
+            <li class="pure-menu-item"><a href="/money.html" class="pure-menu-link">Money[Finance]</a></li>
+            <li class="pure-menu-item"><a href="/share.html" class="pure-menu-link">Resource[Share]</a></li>
+        </ul>
+    </div>
+</div>
+    <div class="splash-container">
+    <div class="splash">
+        <h1 class="splash-head">Mysql-Sql-常用操作</h1>
+        <p class="splash-subhead">
+        	andy发表:
+        </p>
+    </div>
+</div><div class="content-wrapper">
+    	<div class="ribbon l-box-lrg pure-g">
+	    <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
+<pre>
+#>1.表操作
+  <div class="coderead">
+  ---- 创建表  ---- 
+  CREATE table tablename(field1 varchar(50), field2 int(10))
+
+  ---- 使用旧表创建新表  ---- 
+  CREATE table newtable LIKE oldtable
+  CREATE table 表名 as SELECT 列1, 列2... FROM 旧表 definition only
+
+  ---- 删除表  ---- 
+  DROP table 表名
+  
+  ---- 显示所有表  ---- 
+  SHOW tables
+  
+  ---- 显示表详情  ---- 
+  desc 表名
+  SHOW CREATE table 表名
+  
+  ---- 清空表  ---- 
+  TRUNCATE table 表名
+  DELETE FROM 表名
+
+  ---- 修改表名  ---- 
+  ALTER table 原名 RENAME to 新名
+
+  ---- 添加列  ---- 
+  ALTER table 表名 ADD column 列名 类型
+  
+  ---- 删除列  ---- 
+  ALTER table 表名 DROP column 列名
+  
+  ---- 修改列名  ---- 
+  ALTER table 表名 CHANGE 原名 新名 类型 
+  
+  ---- 修改列类型  ---- 
+  ALTER table 表名 MODIFY 列名 类型
+  
+  ---- 更新数据  ---- 
+  UPDATE 表名 SET 字段=值 WHERE 条件
+  
+  ---- 删除数据  ---- 
+  DELETE FROM 表名 WHERE 条件
+  
+  ---- 插入数据  ---- 
+  INSERT INTO 表名(字段1, 字段2...) VALUES(值1, 值2...)
+  ---- 批量插入 ----
+  INSERT INTO `table_name` 
+    (`column1`,`column2`,`column3`,`column4`)
+    VALUES
+    ('value1-1','value1-2','value1-3','value1-4'),
+    ('value2-1','value2-2','value2-3','value2-4'),
+    ('value3-1','value3-2','value3-3','value3-4');
+
+
+  ---- 排序  ---- 
+  SELECT * FROM 表名 ORDER BY 字段 [desc|asc]
+  
+  ---- 统计行数  ---- 
+  SELECT COUNT(*) FROM 表名
+  </div>
+#>2.数据库
+  <div class="coderead">
+  ---- 创建数据库  ---- 
+  CREATE DATABASE 库名
+  
+  ---- 删除数据库  ---- 
+  DROP DATABASE 库名
+  
+  ----  导出命令  ----
+  mysqldump -uroot -p123456  --lock-all-tables --flush-logs yourdbname > yourdbname.sql
+  lock-all-tablesp 加了锁表防止你在导的时候数据还在更新变化
+
+  ---- 导入命令-先登陆进入mysql  ---- 
+  source $path/yourdbname_2019.sql
+  </div> 
+#>3.取巧操作
+  #>3.1.批量处理技巧-CASE WHEN 函数的使用
+  需求:李家5个儿子ID1-5,每个名字加上名字,每个id有不同的名字是吧
+
+  <div class="coderead">
+  ----  更新5条相同的名字,这简单如下   ----
+  UPDATE `table` SET `name`= '李家儿子' WHERE id>0 AND id<6
+
+  ---- 更新5条,各有各的名字,一般写5条sql操作5次 ----
+  UPDATE `table` SET `name`= '李一' WHERE id=1;
+  UPDATE `table` SET `name`= '李二' WHERE id=2;
+  UPDATE `table` SET `name`= '李三' WHERE id=3;
+  UPDATE `table` SET `name`= '李四' WHERE id=4;
+  UPDATE `table` SET `name`= '李五' WHERE id=5;
+
+  ---- CASE 的写法 ----
+  UPDATE `table` SET `name`= 
+    CASE `id`
+      WHEN id=1 THEN '李一' 
+      WHEN id=2 THEN '李二' 
+      WHEN id=3 THEN '李三' 
+      WHEN id=4 THEN '李四' 
+      WHEN id=5 THEN '李五'
+    END
+    WHERE `id` IN(1,2,3,4,5);
+  
+  ---- CASE查询 -----  
+  SELECT 
+    CASE `city`
+      WHEN '长沙' THEN '湖南' 
+      WHEN '衡阳' THEN '湖南'
+      WHEN '海口' THEN '海南' 
+      WHEN '三亚' THEN '海南'
+      ELSE '其他' 
+    END 
+    AS province,
+    SUM(nums) 
+  FROM `pepole`
+  GROUP BY `province`;
+
+  </div>
+    Q:为什么WHERE条件不是 WHERE `id` >0 and `id`<6 ？
+    A:这种写法是合法可行的,但是0-6之间会全部覆盖.如果[id=5,name=李五]这条你不想要修改,条件范围会还是修改id=5的数据.反之如果表中没有id=8的这条数据,你写了when id=8 也是可以的,建议用WHERE IN 改哪些写哪些！！    
+    现在大部分框架都已集成有此功能,batchsave方法等,原理是一样的.
+
+
+  #>3.2.高效的状态统计 COUNT(`status`=1 or NULL)
+  统计 users 表中会员性别分类统计，会员账户状态分类统计
+  sex字段表示性别[-1未知|0女|1男]; 
+  status字段表示用户状态[0|新注册|1付款会员|-1被冻结];
+  <div class="coderead">
+  SELECT COUNT(`id`) total,
+    COUNT(`sex`=-1 OR NULL) unknow_sex,
+    COUNT(`sex`=1 OR NULL) male,
+    COUNT(`sex`=0 OR NULL) female,
+    COUNT(`status`>-1 OR NULL) active_users,
+    COUNT( (`status`=0 AND `sex`=0 ) OR NULL) new_female_users,
+    COUNT(`status`=1 OR NULL) pay_user
+  FROM `users`;
+  </div>         
+  where in (array $list), $list 的长度不要超过命中总条数，否则会引起索引失败导致效率降低
+
+
+杀死一个失控的事务 
+kill trx_mysql_thread_id, select trx_mysql_thread_id from information_schema.innodb_trx.
+
+mysql 密码重置
+mysql_secure_installation
+
+
+</pre></div>
+	</div>
+</div>
+<div class="footer tac">
+    &#169; Since 2018 by <a href="#" class="tfcfff">DataMoney.net</a>
+</div></body>
+</html>

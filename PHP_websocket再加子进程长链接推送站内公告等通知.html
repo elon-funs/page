@@ -1,0 +1,239 @@
+<!Doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="description" content="Let us give attention to technology and economy,facing data and money, some sharing of work and life in my experience.">
+    <title>txt_title</title>
+    <link rel="stylesheet" href="./css/pure.css">
+    <link rel="stylesheet" href="./css/iconfont.css">
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="./css/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="./css/grids-responsive-min.css">
+    <!--<![endif]-->    
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="./css/common-old-ie.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="./css/common.css">
+    <!--<![endif]-->
+</head>
+<body>
+  <div class="header">
+    <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+      <a class="bor-r50p menu-logo" href="#">
+        <div class="menu-logo-c3 bor-r50p">
+          <div class="menu-logo-c5 bor-r50p"></div>
+          <div class="menu-logo-c4 bor-r50p"></div>
+          <div class="menu-logo-color1">
+            <div class="menu-logo-color2"></div>
+          </div>
+        </div>
+      </a>
+      <a class="pure-menu-heading" href="/index.html">DataMoney.net</a>
+      <a class="pure-menu-mobile icon iconfont" href="/index.html">&#xe64d;</a>
+      <ul class="pure-menu-list">
+        <li class="pure-menu-item pure-menu-selected"><a href="/" class="pure-menu-link">Home</a></li>
+        <li class="pure-menu-item"><a href="/data.html" class="pure-menu-link">Data[Tech]</a></li>
+        <li class="pure-menu-item"><a href="/money.html" class="pure-menu-link">Money[Finance]</a></li>
+        <li class="pure-menu-item"><a href="/share.html" class="pure-menu-link">Resource[Share]</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="splash-container">
+    <div class="splash">
+      <h1 class="splash-head">txt_title</h1>
+      <p class="splash-subhead">andy发表:txt_time</p>
+    </div>
+  </div>
+  <div class="content-wrapper">
+    <div class="ribbon l-box-lrg pure-g">
+      <div class="pure-u-1 pure-u-md-1 pure-u-lg-1-1">
+      <pre>
+        <div class="coderead">cmd shell</div>
+
+此DEMO基于laravel8,
+原理：
+1.服务端根据每个用户id起一个socket端口去响应客户端
+2.客户端用html5发起与用自己用户的端口做长链接,并记录发起时的时间戳。
+3.后台循环输出数据最后更新的时间戳,[建议用redis存储最后更新时间,每次更新时数据同步redis值]
+4.客户端根据时间戳判断,是否更新内容并更新本地localstorage
+
+#####服务端
+<?php
+namespace App\Console\Commands;
+
+use App\Models\PublicPost;
+use App\Models\User;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
+
+class WsDocsNews extends Command
+{
+    protected $signature = 'wsDocsNews';
+    protected $domain='http://www.datamoney.net';
+    protected $wsport=30000;
+    protected $resttime=3;//每次间隔时差;
+
+    protected $description = 'socket多子进程处理响应站内公告';
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function handle()
+    {
+        $host = $this->domain;
+        $port = $this->wsport;
+        $uids = User::where('status', 1)->pluck('id');
+        foreach ($uids as $uid) {
+            $pid = pcntl_fork();
+            if (!$pid) {
+                Log::debug('ws建立');
+                $this->ws($host, ($port + $uid));
+            }
+        }
+    }
+
+    public function ws($address, $port)
+    {
+        set_time_limit(0);
+        $sock = socket_create(AF_INET, SOCK_STREAM, SOL_TCP);
+        socket_set_block($sock);
+        socket_bind($sock, $address, $port);
+        socket_listen($sock, 4);
+
+        do {
+            echo "Waiting for Connection...\n";
+            $msgsock = socket_accept($sock);
+            echo "Waiting for Request...\n";
+            $buf = socket_read($msgsock, 8192); //读取请求
+            echo "Request Received: $buf\n";
+            $response = $this->hand_shake($buf);
+            socket_write($msgsock, $response, strlen($response)); //发送响应
+
+            //正式开始通信...
+            $buf = socket_read($msgsock, 8192);
+
+            while (1) {
+                if (empty($noitce_last_update_time = Redis::get('noitce_last_update_time'))) {
+                    $noitce_last_update_time = strtotime(PublicPost::max('updated_at'));
+                    Redis::set('noitce_last_update_time', $noitce_last_update_time);
+                }
+                $msg = $this->code($noitce_last_update_time);
+                sleep($this->resttime);
+                //必须@抑止报错，因为客户端可能直接关闭窗口后台端口无法释放
+                $socket_send = @socket_write($msgsock, $msg, strlen($msg));
+                if ($socket_send == false) {
+                    Log::debug('ws' . $port . '失败疑似客户端非法关闭');
+                    break;
+                }
+            }
+            socket_close($msgsock);
+        } while (true);
+        socket_close($sock);
+    }
+
+    public function hand_shake($buf)
+    {
+        $buf = substr($buf, strpos($buf, 'Sec-WebSocket-Key:') + 18);
+        $key = trim(substr($buf, 0, strpos($buf, "\r\n")));
+
+        $new_key = base64_encode(sha1($key . "258EAFA5-E914-47DA-95CA-C5AB0DC85B11", true));
+
+        $new_message = "HTTP/1.1 101 Switching Protocols\r\n";
+        $new_message .= "Upgrade: websocket\r\n";
+        $new_message .= "Sec-WebSocket-Version: 13\r\n";
+        $new_message .= "Connection: Upgrade\r\n";
+        $new_message .= "Sec-WebSocket-Accept: " . $new_key . "\r\n\r\n";
+        return $new_message;
+    }
+    public function code($msg)
+    {
+        $msg      = preg_replace(array('/\r$/', '/\n$/', '/\r\n$/'), '', $msg);
+        $frame    = array();
+        $frame[0] = '81';
+        $len      = strlen($msg);
+        $frame[1] = $len < 16 ? '0' . dechex($len) : dechex($len);
+        $frame[2] = $this->ord_hex($msg);
+        $data     = implode('', $frame);
+        return pack("H*", $data);
+    }
+    public function ord_hex($data)
+    {
+        $msg = '';
+        $l   = strlen($data);
+        for ($i = 0; $i < $l; $i++) {
+            $msg .= dechex(ord($data[$i]));
+        }
+        return $msg;
+    }
+
+}
+
+
+######客户端
+    <script>
+        var d=new Date();
+        var docstime=d.getTime();
+        $(document).ready(function () {
+            // 页面初始化先请求一次
+            getNewPost();
+            checknewdoc(docstime);
+        });
+
+        //获取公告内容
+        function getNewPost(){
+            $.ajax({
+                url: '{{ admin_url('getFistPost') }}',
+                success: function (result) {
+                    $(".marquee").text(result);
+                    docstime=d.getTime();
+                }
+            });
+        }
+
+        // 建立长链接确认比对数据最后更新时间
+        function checknewdoc(docstime){
+            if ("WebSocket" in window) {
+                // 打开一个 web socket
+                var userid=<?php echo Admin::user()->id ?>;
+                var host=document.domain;
+                var port= 30000 + userid;//30000是后台的配置
+                var ws = new WebSocket("ws://"+host+":"+port);
+
+                ws.onopen = function () {
+                    ws.send("100:hold");
+                };
+
+                ws.onmessage = function (e) {
+                    var received_msg = e.data;
+                    if (parseInt(docstime)<=parseInt(received_msg*1000)) {
+                        getNewPost();
+                    }
+                    console.log("数据已接收:" + received_msg)
+                };
+
+                ws.onclose = function () {
+                    console.log("连接已关闭...")
+                };
+            } else {
+                alert("您的浏览器不支持 WebSocket!");
+            }
+        }
+    </script>
+
+
+      </pre>
+    </div>
+  </div>
+</div>
+<div class="footer tac">
+  &#169; Since 2018 by <a href="#" class="tfcfff">DataMoney.net</a>
+</div>
+</body>
+</html>

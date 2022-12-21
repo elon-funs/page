@@ -197,9 +197,29 @@
 杀死一个失控的事务 
 kill trx_mysql_thread_id, select trx_mysql_thread_id from information_schema.innodb_trx.
 
-mysql 密码重置
+mysql 密码重置命令行执行
 mysql_secure_installation
 
+5. 复制一张表结构
+```
+CREATE TABLE `your_table_name` LIKE `destination_table_name`;
+INSERT INTO `your_table_name` SELECT * FROM `destination_table_name`;
+
+6.内置函数
+trim()  返回去除指定格式的值
+concat(x,y) 将提供的参数 x 和 y 拼接成一个字符串
+substr(x,y) 获取从字符串 x 中的第 y 个位置开始的字符串，跟substring()函数作用相同
+substr(x,y,z) 获取从字符串 x 中的第 y 个位置开始长度为 z 的字符串
+length(x) 返回字符串 x 的长度
+replace(x,y,z)  将字符串 z 替代字符串 x 中的字符串 y
+upper(x)  将字符串 x 的所有字母变成大写字母
+lower(x)  将字符串 x 的所有字母变成小写字母
+left(x,y) 返回字符串 x 的前 y 个字符
+right(x,y)  返回字符串 x 的后 y 个字符
+repeat(x,y) 将字符串 x 重复 y 次
+space(x)  返回 x 个空格
+strcmp(x,y) 比较 x 和 y，返回的值可以为-1,0,1
+reverse(x)  将字符串 x 反转
 
 </pre></div>
 	</div>
